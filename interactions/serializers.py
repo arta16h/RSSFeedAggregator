@@ -47,3 +47,11 @@ class PlaylistSerializer(ModelSerializer):
             "created_at",
             "updated_at",
         ]
+        
+    def update(self, instance, validated_data):
+        for podcast in validated_data.get("podcasts"):
+            instance.podcasts.add(podcast)
+        for episode in validated_data.get("episodes"):
+            instance.episodes.add(episode)
+        instance.save()
+        return instance
