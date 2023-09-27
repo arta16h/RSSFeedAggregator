@@ -35,6 +35,7 @@ class Podcast(models.Model):
     pubDate = models.DateTimeField(auto_now_add=True)
     imageUrl = models.URLField(max_length=255, null=True, blank=True)
     subtitle = models.CharField(max_length=255, null=True, blank=True)
+    keywords = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -49,6 +50,7 @@ class Episode(models.Model):
     explicit = models.CharField(max_length=5, default="no")
     summary = models.TextField(null=True, blank=True)
     audioUrl = models.URLField(max_length=300)
+    keywords = models.TextField(null=True, blank=True)
 
 
     def __str__(self):
