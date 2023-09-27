@@ -3,6 +3,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import BaseAuthentication
 
 from .models import User
+from .utils import JwtHelper
 from config.settings import SECRET_KEY
 
 
