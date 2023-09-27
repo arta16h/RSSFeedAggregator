@@ -90,3 +90,27 @@ class PlaylistAPIView(APIView):
         playlist_serializer.is_valid(raise_exception=True)
         playlist_serializer.save()
         return Response(data={"message":"succeeded"}, status=status.HTTP_201_CREATED)
+    
+
+class SubscribeView(generics.ListCreateAPIView):
+    authentication_classes = (JwtAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        subscribe_serializer = SubscribeSerializer(data = request.data)
+        podcast = Podcast.objects.get(id= subscribe_serializer.validated_data.get("model_id"))
+        user = request.user
+
+        try:
+            already_subscribed = Subscribe.objects.get(user=user, podcast=podcast)
+            already_subscribed.delete()
+            return Response({"message": "unsubscribed"}, status=status.HTTP_200_OK)
+        
+        except Subscribe.DoesNotExist:
+            subscribe_data = {"user": user.id, "podcast": podcast}
+            serializer = self.get_serializer(data=subscribe_data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
