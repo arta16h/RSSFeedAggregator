@@ -19,3 +19,22 @@ class Category:
     
     def __str__(self):
         return self.name
+    
+
+class Podcast(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    category = models.ManyToManyField(Category)
+    author = models.CharField(max_length=50, null=True)
+    rssOwner = models.CharField(max_length=50, null=True, blank=True)
+    websiteUrl = models.URLField(max_length=255, null=True, blank=True)
+    isExplicitContent = models.CharField(max_length=5, default="no")
+    copyright = models.CharField(max_length=50, null=True, blank=True)
+    language = models.CharField(max_length=50, null=True, blank=True)
+    contentType = models.CharField(max_length=10, null=True, blank=True)
+    pubDate = models.DateTimeField(auto_now_add=True)
+    imageUrl = models.URLField(max_length=255, null=True, blank=True)
+    subtitle = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
