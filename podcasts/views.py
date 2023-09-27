@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -13,3 +13,11 @@ class EpisodeListView():
         queryset = Episode.objects.all()
         serializer_data = EpisodeSerializer(queryset, many=True)
         return Response(serializer_data.data, status=status.HTTP_200_OK)
+    
+
+class PodcastListView(generics.ListCreateAPIView):
+    serializer_class = PodcastSerializer
+
+    def get_queryset(self):
+        queryset = Podcast.objects.all()
+        return queryset
