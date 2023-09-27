@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Like, Comment, Subscribe
+from .models import Like, Comment, Subscribe, Playlist
 
 
 class SubscribeSerializer(ModelSerializer):
@@ -30,6 +30,20 @@ class CommentSerializer(ModelSerializer):
             "user",
             "episode",
             "content",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class PlaylistSerializer(ModelSerializer):
+    class META:
+        model = Playlist
+        fields = [
+            "title",
+            "description",
+            "user",
+            "podcasts",
+            "episodes",
             "created_at",
             "updated_at",
         ]
