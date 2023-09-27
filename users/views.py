@@ -40,3 +40,11 @@ class LoginAPIView(APIView):
         response.set_cookie(key="jwt", value=token, httponly=True)
         response.data = {"jwt":token}
         return response
+    
+
+class LogoutAPIView(APIView):
+    def post(self, _):
+        response = Response()
+        response.delete_cookie(key="jwt")
+        response.data = {"message": "succeded"}
+        return response
