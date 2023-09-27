@@ -21,3 +21,19 @@ class PodcastSerializer(serializers.ModelSerializer):
             "subtitle",
             "keywords",
         ]
+
+
+class EpisodeSerializer(serializers.ModelSerializer) :
+    class Meta:
+        model = Episode
+        fields = [
+            "podcast",
+            "title",
+            "description",
+            "duration",
+            "pubDate",
+            "explicit",
+            "summary",
+            "audioUrl",
+            "keywords",
+        ]
