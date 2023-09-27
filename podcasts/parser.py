@@ -1,4 +1,4 @@
-import json, requests
+import requests
 import xml.etree.ElementTree as ET
 from django.db import transaction
 from .models import Podcast, Episode
