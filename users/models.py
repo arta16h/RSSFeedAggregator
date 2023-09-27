@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -23,3 +23,22 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(phone, password, **other_fields)
+    
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    phone = models.CharField(unique=True, max_length=20)
+    username = models.CharField(max_length=50,unique=True)
+    password = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
+    USERNAME_FIELD = "phone"
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return f"{self.phone}"
