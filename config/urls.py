@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('podcast/', include('podcast.urls')),
     path('users/', include('users.urls')),
+    path('feedback/', include('feedback.urls')),
 ]
