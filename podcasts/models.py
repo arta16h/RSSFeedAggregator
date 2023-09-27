@@ -38,3 +38,18 @@ class Podcast(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Episode(models.Model):
+    podcast = models.ForeignKey(Podcast, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True,blank=True)
+    duration = models.CharField(max_length=25)
+    pubDate = models.DateTimeField()
+    explicit = models.CharField(max_length=5, default="no")
+    summary = models.TextField(null=True, blank=True)
+    audioUrl = models.URLField(max_length=300)
+
+
+    def __str__(self):
+        return self.title
