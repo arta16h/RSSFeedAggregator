@@ -10,3 +10,15 @@ class LikeSerializer(ModelSerializer):
             "created_at",
             "updated_at",
         ]
+
+
+class CommentSerializer(ModelSerializer):
+    class META:
+        model = Comment
+        fields = [
+            "user",
+            "episode",
+            "content",
+            "created_at",
+            "updated_at",
+        ]
