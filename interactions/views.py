@@ -39,7 +39,7 @@ class LikeAPIView(APIView):
                     like = Like(content_object = episode, account = request.user)
                     like.save()
 
-            return Response(data={"message": "succeded"}, status=status.HTTP_201_CREATED)
+            return Response(data={"message": "succeeded"}, status=status.HTTP_201_CREATED)
         
     def liked_list(self, request, *args, **kwargs):
         liked = Like.objects.filter(user=request.user)
@@ -74,4 +74,19 @@ class CommentAPIView(APIView):
                 comment = Comment(content_object= episode, account= request.user, text= comment_serializer.validated_data.get("text"))
                 comment.save()
 
-        return Response(data={"message":"succeded"}, status=status.HTTP_201_CREATED)
+        return Response(data={"message":"succeeded"}, status=status.HTTP_201_CREATED)
+    
+
+
+class PlaylistAPIView(APIView):
+    authentication_classes = [JwtAuthentication]
+    permission_classes=[IsAuthenticated]
+
+    def post(self, request):
+        DATA =  request.data.copy()
+        DATA["account"] = request.user
+        DATA.pop("playlist")
+        playlist_serializer = PlaylistSerializer(data = DATA, partial = True ,instance=Playlist.objects.get(id=request.data.get("playlist")))
+        playlist_serializer.is_valid(raise_exception=True)
+        playlist_serializer.save()
+        return Response(data={"message":"succeeded"}, status=status.HTTP_201_CREATED)
