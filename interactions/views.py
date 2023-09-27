@@ -10,7 +10,7 @@ from .serializers import *
 
 # Create your views here.
 
-class LikeView(APIView):
+class LikeAPIView(APIView):
     authentication_classes = [JwtAuthentication]
     permission_classes=[IsAuthenticated]
 
@@ -44,3 +44,34 @@ class LikeView(APIView):
     def liked_list(self, request, *args, **kwargs):
         liked = Like.objects.filter(user=request.user)
         return Response({"Liked": list(liked)}, status=status.HTTP_200_OK)
+    
+
+class CommentAPIView(APIView):
+    authentication_classes = [JwtAuthentication]
+    permission_classes=[IsAuthenticated]
+
+    def post(self, request):
+        comment_serializer = CommentSerializer(data = request.data)
+        comment_serializer.is_valid(raise_exception=True)
+
+        if comment_serializer.validated_data.get("model")=="podcast":
+            try:
+                podcast = Podcast.objects.get(id= comment_serializer.validated_data.get("model_id"))
+            except Podcast.DoesNotExist:
+                return Response({"error": "Podcast not found."}, status=status.HTTP_404_NOT_FOUND)
+            
+            if podcast:
+                comment = Comment(content_object = podcast, account = request.user, text = comment_serializer.validated_data.get("text"))
+                comment.save()
+
+        elif comment_serializer.validated_data.get("model")=="episode":
+            try:
+                episode = Episode.objects.get(id= comment_serializer.validated_data.get("model_id"))
+            except Episode.DoesNotExist:
+                return Response({"error": "Episode not found."}, status=status.HTTP_404_NOT_FOUND)
+            
+            if episode:
+                comment = Comment(content_object= episode, account= request.user, text= comment_serializer.validated_data.get("text"))
+                comment.save()
+
+        return Response(data={"message":"succeded"}, status=status.HTTP_201_CREATED)
