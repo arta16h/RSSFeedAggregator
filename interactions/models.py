@@ -37,3 +37,17 @@ class Comment:
 
     def __str__(self):
         return self.user
+    
+
+class Playlist:
+    title = models.CharField(max_length=40)
+    description = models.TextField(blank=False,null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    podcasts = models.ManyToManyField(Podcast)
+    episodes = models.ManyToManyField(Episode)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self) -> str:
+        return self.title
