@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from .models import Podcast, Episode
+from .models import Podcast, Episode, Owner
+
+class OwnerSerializer(serializers.Serializer):
+    class Meta:
+        model = Owner
+        fields = [
+            "name",
+            "email",
+            "created_at",
+            "updated_at",
+        ]
+
+
 
 
 class PodcastSerializer(serializers.ModelSerializer):
