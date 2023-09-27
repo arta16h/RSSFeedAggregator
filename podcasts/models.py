@@ -51,6 +51,7 @@ class Episode(models.Model):
     summary = models.TextField(null=True, blank=True)
     audioUrl = models.URLField(max_length=300)
     keywords = models.TextField(null=True, blank=True)
+    imageUrl = models.URLField(max_length=255, null=True, blank=True)
 
 
     def __str__(self):
