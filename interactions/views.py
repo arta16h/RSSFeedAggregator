@@ -114,3 +114,6 @@ class SubscribeView(generics.ListCreateAPIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def subscribed_list(self, request, *args, **kwargs):
+        subscried = Subscribe.objects.filter(user=request.user)
+        return Response({"Subscribed": list(subscried)}, status=status.HTTP_200_OK)
