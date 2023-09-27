@@ -8,11 +8,11 @@ from .serializers import PodcastSerializer, EpisodeSerializer
 # Create your views here.
 
 class EpisodeListView():
+    serializer_class = EpisodeSerializer
 
-    def get(self, request):
+    def get_queryset(self):
         queryset = Episode.objects.all()
-        serializer_data = EpisodeSerializer(queryset, many=True)
-        return Response(serializer_data.data, status=status.HTTP_200_OK)
+        return queryset
     
 
 class PodcastListView(generics.ListCreateAPIView):
