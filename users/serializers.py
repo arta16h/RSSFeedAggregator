@@ -14,3 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
         ]
 
+    def create(self, validate_data):
+        password = validate_data.pop("password", None)
+        instance = self.Meta.model(**validate_data)
+        if password is not None:
+            instance.set_password(password)
+        else:
+            raise ("Password field can not be empty!" )
+        instance.save()
+        return instance
