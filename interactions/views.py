@@ -40,3 +40,7 @@ class LikeView(APIView):
                     like.save()
 
             return Response(data={"message": "succeded"}, status=status.HTTP_201_CREATED)
+        
+    def liked_list(self, request, *args, **kwargs):
+        liked = Like.objects.filter(user=request.user)
+        return Response({"Liked": list(liked)}, status=status.HTTP_200_OK)
