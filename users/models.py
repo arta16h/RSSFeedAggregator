@@ -1,4 +1,7 @@
+import re
+
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 # Create your models here.
 
@@ -24,10 +27,16 @@ class UserManager(BaseUserManager):
 
         return self.create_user(phone, password, **other_fields)
     
+PHONE_REGEX_PATTERN = r"^(\\+98|0)?9\\d{9}$"
+
+def phone_validator(phone:str):
+    if not (matched := re.fullmatch(PHONE_REGEX_PATTERN, phone.strip())):
+        raise ValidationError("Invalid phone number!")
+    return matched
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    phone = models.CharField(unique=True, max_length=20)
+    phone = models.CharField(validators=[phone_validator], unique=True, max_length=20)
     username = models.CharField(max_length=50,unique=True)
     password = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
