@@ -1,6 +1,7 @@
 import json, requests
 import xml.etree.ElementTree as ET
-
+from django.db import transaction
+from .models import Podcast, Episode
 
 class Parser:
     def __init__(self, url) :
@@ -82,3 +83,38 @@ class Parser:
         except requests.exceptions.RequestException as e:
             print(f"Error fetching RSS feed: {e}")
             return None
+        
+    def save_podcast_to_db(self, data):
+        podcast_metadata = data.get("podcast_metadata")
+        episodes = data.get("episodes")
+        with transaction.atomic():
+            podcast, created = Podcast.objects.get_or_create(
+                title=podcast_metadata["title"])
+
+            podcast.description = podcast_metadata["description"]
+            podcast.category = podcast_metadata["category"]
+            podcast.subtitle = podcast_metadata["subtitle"]
+            podcast.author = podcast_metadata["author"]
+            podcast.imageUrl = podcast_metadata["imageUrl"]
+            podcast.rssOwner = podcast_metadata["rssOwner"]
+            podcast.websiteUrl = podcast_metadata["websiteUrl"]
+            podcast.isExplicitContent = podcast_metadata["isExplicitContent"]
+            podcast.language = podcast_metadata["language"]
+            podcast.contentType = podcast_metadata["contentType"]
+            podcast.save()
+
+            episode_list = []
+            for episode_data in episodes:
+                if not Episode.objects.filter(podcast=podcast, audioUrl=episode_data["audioUrl"]).exists():
+                    episode = Episode(
+                        podcast=podcast,
+                        title=episode_data["title"],
+                        duration=episode_data["duration"],
+                        audioUrl=episode_data["audioUrl"],
+                        pubDate=episode_data["pubDate"],
+                        explicit=episode_data["explicit"] == "yes",
+                        imageUrl=episode_data.get("imageUrl", ""),
+                        summary=episode_data["summary"],
+                        description=episode_data["description"])
+                    episode_list.append(episode)
+            Episode.objects.bulk_create(episode_list)
