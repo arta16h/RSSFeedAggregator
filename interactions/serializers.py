@@ -1,6 +1,17 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Like, Comment, Subscribe
 
+
+class SubscribeSerializer(ModelSerializer):
+    class META:
+        model = Subscribe
+        fields = [
+            "user",
+            "podcast",
+            "created_at",
+            "updated_at",
+        ]
+
 class LikeSerializer(ModelSerializer):
     class META:
         model = Like
