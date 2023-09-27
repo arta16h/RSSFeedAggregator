@@ -9,7 +9,7 @@ from .serializers import PodcastSerializer, EpisodeSerializer
 
 # Create your views here.
 
-class EpisodeListView():
+class EpisodeListView(generics.ListCreateAPIView):
     serializer_class = EpisodeSerializer
 
     def get_queryset(self):
