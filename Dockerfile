@@ -1,5 +1,11 @@
 FROM python3
 
+LABEL version="1.0.0"
+
+LABEL maintainer="sevda.hayati2015@gmail.com"
+
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /dockerrss
 
 COPY requirements.txt .
