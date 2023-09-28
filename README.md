@@ -3,13 +3,8 @@ Welcome to the RSS Feed Django project!
 
 ## Table of Contents
 * [About the Project](#about-the-project)
-* [Build With](#build-with)
 * [Setup](#setup)
-  - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-
-* [Running the Project](#running-the-project)
-* [License](#license)
 * [Contributing](#contributing)
 
 
@@ -71,28 +66,6 @@ python manage.py createsuperuser
 Follow the prompts to set a phone number and password for the admin account.
 
 Congratulations! The RSS Feed Django project has been successfully set up on your machine.
-
-
-### Running the Project
-To run the RSS Feed Django project, follow these steps:
-
-Activate the virtual environment (if not already activated):
-
-For Windows:
-
-```bash
-env\Scripts\activate
-```
-For macOS/Linux:
-
-```bash
-source env/bin/activate
-```
-Start the server:
-
-```bash
-python manage.py runserver
-```
 
 ### Contributing
 We welcome contributions to the RSS Feed Django project. If you'd like to contribute, please follow these steps:
