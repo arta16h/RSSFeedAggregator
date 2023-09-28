@@ -5,7 +5,7 @@ from rest_framework.views import Response, APIView
 from rest_framework import status
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer
 
 # Create your views here.
 
@@ -17,6 +17,13 @@ class RegisterAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
+class SendOTPAPIView(APIView):
+    def post(self, request):
+        serializer=LoginSerializer(data=request.data, context={"request":request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.create_otp(request, serializer.data["phone"])
+            return Response (data={"message":"200"})
+        
 
 class LoginAPIView(APIView):
     def post(self, request):
