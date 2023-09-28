@@ -9,7 +9,7 @@ from podcasts.models import Podcast, Episode
 # Create your models here.
 
 class Subscribe:
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     podcast = models.ForeignKey(Podcast, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,7 +19,7 @@ class Subscribe:
 
 
 class Like:
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -29,7 +29,7 @@ class Like:
 
 
 class Comment:
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -42,7 +42,7 @@ class Comment:
 class Playlist:
     title = models.CharField(max_length=40)
     description = models.TextField(blank=False,null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="user")
     podcasts = models.ManyToManyField(Podcast)
     episodes = models.ManyToManyField(Episode)
     created_at = models.DateTimeField(auto_now_add=True)
