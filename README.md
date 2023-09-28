@@ -4,7 +4,6 @@ Welcome to the RSS Feed Django project!
 ## Table of Contents
 * [About the Project](#about-the-project)
 * [Setup](#setup)
-  - [Installation](#installation)
 * [Contributing](#contributing)
 
 
@@ -14,8 +13,6 @@ This project is a web application built with Django Rest framework for content a
 
 
 ## Setup
-
-### Installation
 Follow these steps to set up the project:
 
 Clone the repository using Git:
