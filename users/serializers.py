@@ -45,3 +45,16 @@ class LoginSerializer(serializers.Serializer):
         request.session["otp_expire"] = (timezone.now() + timedelta(minutes=10)).strftime("%d/%m/%Y, %H:%M:%S")
         request.session["phone"]=phone
         print(f"otp:{request.session['otp']}  until:{request.session['otp_expire']}")
+
+
+class LoginOTPSerializer(serializers.Serializer):
+    otp = serializers.IntegerField(required=True, allow_null=False)
+
+    def validate(self, data):
+        otp = data.get("otp")
+        request = self.context.get("request")
+        if not otp == request.session.get("otp"):
+            raise serializers.ValidationError
+        if not User.objects.filter(phone=request.session.get("phone")).exists():
+            raise serializers.ValidationError
+        return data
