@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('podcasts/', include('podcasts.urls')),
     path('users/', include('users.urls')),
-    path('interaction/', include('interaction.urls')),
+    path('interactions/', include('interactions.urls')),
 ]
