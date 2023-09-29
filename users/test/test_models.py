@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
-from ..models import User
+from ..models import User, UserManager
 
 
 class UserModelTest(TestCase):
@@ -38,3 +38,10 @@ class UserModelTest(TestCase):
         self.assertEqual(user.username, "newuser")
         self.assertEqual(user.email, "new@example.com")
         self.assertTrue(user.check_password("newpassword"))
+
+    def test_create_superuser(self):
+        admin_user = UserManager.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")
+        self.assertEqual(admin_user.username, "admin")
+        self.assertEqual(admin_user.email, "admin@example.com")
+        self.assertTrue(admin_user.is_superuser)
+        self.assertTrue(admin_user.is_staff)
