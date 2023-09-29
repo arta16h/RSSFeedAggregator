@@ -67,3 +67,8 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(validators = (validate_password,))
     confirm_password = serializers.CharField()
 
+    def validate_digits(self, value):
+        if 20<len(value)<6:
+            raise ValidationError("Password must have between 6 to 20 digits")
+        return value
+
