@@ -4,7 +4,13 @@ from ..models import User
 
 
 class UserModelTest(TestCase):
-    
+
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword')
+
+
+    def test_username_label(self):
+        field_label = self.user._meta.get_field('username').verbose_name
+        self.assertEqual(field_label, 'username')
+
