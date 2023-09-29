@@ -1,10 +1,12 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
+from django.utils import timezone
 
 from .models import User
 
 import random
 from datetime import timedelta
-from django.utils import timezone
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -58,3 +60,10 @@ class LoginOTPSerializer(serializers.Serializer):
         if not User.objects.filter(phone=request.session.get("phone")).exists():
             raise serializers.ValidationError
         return data
+    
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField()
+    new_password = serializers.CharField(validators = (validate_password,))
+    confirm_password = serializers.CharField()
+
