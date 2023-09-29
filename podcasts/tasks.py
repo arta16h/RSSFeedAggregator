@@ -1,5 +1,5 @@
 import logging
-from celery import shared_task
+from celery import shared_task, Task
 from celery.worker.request import Request
 from celery.exceptions import Retry
 from .models import Podcast
@@ -33,3 +33,11 @@ class PodcastHandler(Request):
         logger.info(kwargs)
         logger.info("Successfully updated")
         return super().on_success(**kwargs)
+    
+
+class BaseTask(Task):
+    Request = PodcastHandler
+    autoretry_for = (Exception,)
+    max_retries = 5
+    retry_backoff = True
+    retry_jitter = False
