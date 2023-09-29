@@ -26,3 +26,7 @@ class UserModelTest(TestCase):
         max_length = self.user._meta.get_field("first_name").max_length
         self.assertEqual(max_length, 50)
 
+    def test_last_name_max_length(self):
+        max_length = self.user._meta.get_field("last_name").max_length
+        self.assertEqual(max_length, 50)
+
