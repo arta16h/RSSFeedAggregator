@@ -3,9 +3,11 @@ from django.http import Http404
 from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Podcast, Episode
 from .serializers import PodcastSerializer, EpisodeSerializer
+from users.utils import JwtHelper
 
 # Create your views here.
 
@@ -45,3 +47,20 @@ class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
         if not queryset.exists():
             raise Http404("Podcast episode not found")
         return queryset.first()
+    
+
+class PodcastRecommendationAPIView(APIView):
+    authentication_classes = (JwtHelper,)
+    permission_classes = (IsAuthenticated,)
+
+    recommendations_methods = {
+        "likes": like_based_recomended_podcasts,
+        "subscriptions": subscription_based_recommended_podcasts,
+    }
+
+    def get(self, request, method):
+        if method not in self.recommendations_methods:
+            return Response({"details":"Recommendation method not found"}, status=status.HTTP_400_BAD_REQUEST)
+        user = request.user
+        function = self.recommendations_methods[method]
+        return Response(function(user))
