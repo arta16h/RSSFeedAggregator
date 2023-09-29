@@ -41,7 +41,7 @@ class LikeAPIView(APIView):
             return Response(data={"message": "succeeded"}, status=status.HTTP_201_CREATED)
         
     def liked_list(self, request, *args, **kwargs):
-        liked = Like.objects.filter(user=request.user)
+        liked = Like.objects.filter(user=request.user).values_list("episode__id", flat=True)
         return Response({"Liked": list(liked)}, status=status.HTTP_200_OK)
     
 
@@ -114,5 +114,5 @@ class SubscribeView(generics.ListCreateAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def subscribed_list(self, request, *args, **kwargs):
-        subscried = Subscribe.objects.filter(user=request.user)
+        subscried = Subscribe.objects.filter(user=request.user).values_list("podcast__id", flat=True)
         return Response({"Subscribed": list(subscried)}, status=status.HTTP_200_OK)
