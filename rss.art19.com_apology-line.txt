@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:art19="https://art19.com/xmlns/rss-extensions/1.0" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0/" version="2.0">
+  <channel>
+    <title>The Apology Line</title>
+    <description>
+      <![CDATA[<p>If you could call a number and say you’re sorry, and no one would know…what would you apologize for? For fifteen years, you could call a number in Manhattan and do just that. This is the story of the line, and the man at the other end who became consumed by his own creation. He was known as “Mr. Apology.” As thousands of callers flooded the line, confessing to everything from shoplifting to infidelity, drug dealing to murder, Mr. Apology realized he couldn’t just listen. He had to do something, even if it meant risking everything. From Wondery the makers of Dr. Death and The Shrink Next Door, comes a story about empathy, deception and obsession. Marissa Bridge, who knew Mr. Apology better than anyone, hosts this six episode series.</p><p>All episodes are available now. You can binge the series ad-free on Wondery+ or on Amazon Music with a Prime membership or Amazon Music Unlimited subscription. </p>]]>
+    </description>
+    <managingEditor>iwonder@wondery.com (Wondery)</managingEditor>
+    <copyright>© 2021 Wondery, Inc.  All rights reserved</copyright>
+    <generator>ART19</generator>
+    <atom:link href="https://rss.art19.com/apology-line" rel="self" type="application/rss+xml"/>
+    <link>https://wondery.com/shows/the-apology-line/?utm_source=rss</link>
+    <itunes:owner>
+      <itunes:name>Wondery</itunes:name>
+      <itunes:email>iwonder@wondery.com</itunes:email>
+    </itunes:owner>
+    <itunes:author>Wondery</itunes:author>
+    <itunes:summary>
+      <![CDATA[<p>If you could call a number and say you’re sorry, and no one would know…what would you apologize for? For fifteen years, you could call a number in Manhattan and do just that. This is the story of the line, and the man at the other end who became consumed by his own creation. He was known as “Mr. Apology.” As thousands of callers flooded the line, confessing to everything from shoplifting to infidelity, drug dealing to murder, Mr. Apology realized he couldn’t just listen. He had to do something, even if it meant risking everything. From Wondery the makers of Dr. Death and The Shrink Next Door, comes a story about empathy, deception and obsession. Marissa Bridge, who knew Mr. Apology better than anyone, hosts this six episode series.</p><p>All episodes are available now. You can binge the series ad-free on Wondery+ or on Amazon Music with a Prime membership or Amazon Music Unlimited subscription. </p>]]>
+    </itunes:summary>
+    <language>en</language>
+    <itunes:explicit>yes</itunes:explicit>
+    <itunes:category text="True Crime"/>
+    <itunes:keywords>Exhibit C,Binge-worthy true crime,New York City,Binge Worthy Documentary ,Apology Line,Apology,Murder,This American Life,society,true crime,serial killer</itunes:keywords>
+    <itunes:type>serial</itunes:type>
+    <itunes:image href="https://content.production.cdn.art19.com/images/be/e1/82/c2/bee182c2-14b7-491b-b877-272ab6754025/bd4ab6d08d7b723678a682b6e399d26523245b3ba83f61617b9b28396aba1092b101cd86707576ec021b77e143b447463342b352f8825265b15310c989b6cb93.jpeg"/>
+    <image>
+      <url>https://content.production.cdn.art19.com/images/be/e1/82/c2/bee182c2-14b7-491b-b877-272ab6754025/bd4ab6d08d7b723678a682b6e399d26523245b3ba83f61617b9b28396aba1092b101cd86707576ec021b77e143b447463342b352f8825265b15310c989b6cb93.jpeg</url>
+      <link>https://wondery.com/shows/the-apology-line/?utm_source=rss</link>
+      <title>The Apology Line</title>
+    </image>
+    <item>
+      <title>Listen Now: Hooked on Freddie</title>
+      <description>
+        <![CDATA[<p>Did one man’s friendship with a dolphin go way – way – too far? It’s 1987 and the&nbsp;British seaside town of Amble has seen much better days.&nbsp;So&nbsp;when a wild&nbsp;bottlenose dolphin nicknamed Freddie appears in the harbour, it feels like a&nbsp;miracle. Everyone wants to swim with him. But Freddie chooses one person above&nbsp;all others: Alan Cooper, a dedicated animal rights activist committed to freeing&nbsp;captive dolphins. But when Alan’s friendship with Freddie is turned against him,&nbsp;he finds himself in the fight of his life.</p><p><br></p><p>Search 'Hooked on Freddie' wherever you get your podcasts. <a href="https://wondery.com/links/hooked-on-freddie/" rel="noopener noreferrer" target="_blank">https://wondery.com/links/hooked-on-freddie/&nbsp;</a></p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </description>
+      <itunes:title>Listen Now: Hooked on Freddie</itunes:title>
+      <itunes:episodeType>trailer</itunes:episodeType>
+      <itunes:summary>Did one man’s friendship with a dolphin go way – way – too far? It’s 1987 and the British seaside town of Amble has seen much better days. So when a wild bottlenose dolphin nicknamed Freddie appears in the harbour, it feels like a miracle. Everyone wants to swim with him. But Freddie chooses one person above all others: Alan Cooper, a dedicated animal rights activist committed to freeing captive dolphins. But when Alan’s friendship with Freddie is turned against him, he finds himself in the fight of his life.
+
+
+
+
+Search 'Hooked on Freddie' wherever you get your podcasts. https://wondery.com/links/hooked-on-freddie/ 
+
+See Privacy Policy at https://art19.com/privacy and California Privacy Notice at https://art19.com/privacy#do-not-sell-my-info.</itunes:summary>
+      <content:encoded>
+        <![CDATA[<p>Did one man’s friendship with a dolphin go way – way – too far? It’s 1987 and the&nbsp;British seaside town of Amble has seen much better days.&nbsp;So&nbsp;when a wild&nbsp;bottlenose dolphin nicknamed Freddie appears in the harbour, it feels like a&nbsp;miracle. Everyone wants to swim with him. But Freddie chooses one person above&nbsp;all others: Alan Cooper, a dedicated animal rights activist committed to freeing&nbsp;captive dolphins. But when Alan’s friendship with Freddie is turned against him,&nbsp;he finds himself in the fight of his life.</p><p><br></p><p>Search 'Hooked on Freddie' wherever you get your podcasts. <a href="https://wondery.com/links/hooked-on-freddie/" rel="noopener noreferrer" target="_blank">https://wondery.com/links/hooked-on-freddie/&nbsp;</a></p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </content:encoded>
+      <guid isPermaLink="false">gid://art19-episode-locator/V0/KGRmId1dPTEjwIFQE4_elH7z_5cu9rq2uKSXvyHAx1k</guid>
+      <pubDate>Mon, 18 Sep 2023 23:00:00 -0000</pubDate>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:image href="https://content.production.cdn.art19.com/images/14/dc/bd/f6/14dcbdf6-3724-4979-a291-2d18872ae6b8/e797f298b59c54a253ae7d995e1ebcf75fab214f042f910244764e5521073fd46184464b56fc254c7dad3adb6b11f6d1790bc13231d1e18258a1ca9e3cabfe11.jpeg"/>
+      <itunes:keywords>Serial killer,TRUE CRIME,Society,This American Life,MURDER,Apology,Apology Line,Binge Worthy Documentary,New York City,Binge-worthy true crime,exhibit c</itunes:keywords>
+      <itunes:duration>00:05:57</itunes:duration>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/chrt.fm/track/9EE2G/pdst.fm/e/rss.art19.com/episodes/d0714cf1-e0ff-4f1d-9c85-f0be4b7d097f.mp3?rss_browser=BAhJIgtDaHJvbWUGOgZFVA%3D%3D--d05363d83ce333c74f32188013892b2863ad051c" type="audio/mpeg" length="5718099"/>
+    </item>
+    <item>
+      <title>Listen Now – Even the Rich: ¡Viva Selena!</title>
+      <description>
+        <![CDATA[<p>Selena Quintanilla was a force of nature. But when a loyal friend betrayed her, she met a fate she never deserved. Even the Rich is a podcast from Wondery that tells you the stories of the crazy lives of the greatest family dynasties to pop culture superstars. In their new season “¡Viva Selena!”, you’ll hear how she made a massive cultural impact, and became a legend the world will never forget.</p><p>This is just a preview of Even the Rich. You can listen to the full episode wherever you get your podcasts, or at <a href="http://wondery.fm/etr-vivaselena" rel="noopener noreferrer" target="_blank">wondery.fm/etr-vivaselena</a>.</p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </description>
+      <itunes:title>Listen Now – Even the Rich: ¡Viva Selena!</itunes:title>
+      <itunes:episodeType>trailer</itunes:episodeType>
+      <itunes:summary>Selena Quintanilla was a force of nature. But when a loyal friend betrayed her, she met a fate she never deserved. Even the Rich is a podcast from Wondery that tells you the stories of the crazy lives of the greatest family dynasties to pop culture superstars. In their new season “¡Viva Selena!”, you’ll hear how she made a massive cultural impact, and became a legend the world will never forget.
+
+This is just a preview of Even the Rich. You can listen to the full episode wherever you get your podcasts, or at wondery.fm/etr-vivaselena.
+
+See Privacy Policy at https://art19.com/privacy and California Privacy Notice at https://art19.com/privacy#do-not-sell-my-info.</itunes:summary>
+      <content:encoded>
+        <![CDATA[<p>Selena Quintanilla was a force of nature. But when a loyal friend betrayed her, she met a fate she never deserved. Even the Rich is a podcast from Wondery that tells you the stories of the crazy lives of the greatest family dynasties to pop culture superstars. In their new season “¡Viva Selena!”, you’ll hear how she made a massive cultural impact, and became a legend the world will never forget.</p><p>This is just a preview of Even the Rich. You can listen to the full episode wherever you get your podcasts, or at <a href="http://wondery.fm/etr-vivaselena" rel="noopener noreferrer" target="_blank">wondery.fm/etr-vivaselena</a>.</p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </content:encoded>
+      <guid isPermaLink="false">gid://art19-episode-locator/V0/DU4Xf94YEFor_nlS8oKB_nnhzkOMAtO890aCIsquFfE</guid>
+      <pubDate>Tue, 05 Sep 2023 08:00:00 -0000</pubDate>
+      <itunes:explicit>yes</itunes:explicit>
+      <itunes:image href="https://content.production.cdn.art19.com/images/be/e1/82/c2/bee182c2-14b7-491b-b877-272ab6754025/bd4ab6d08d7b723678a682b6e399d26523245b3ba83f61617b9b28396aba1092b101cd86707576ec021b77e143b447463342b352f8825265b15310c989b6cb93.jpeg"/>
+      <itunes:keywords>SERIAL KILLER,TRUE CRIME,Society,This American Life,Murder,Apology,Apology Line,Binge Worthy Documentary,New York City,Binge-worthy true crime,exhibit c</itunes:keywords>
+      <itunes:duration>00:06:05</itunes:duration>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/chrt.fm/track/9EE2G/pdst.fm/e/rss.art19.com/episodes/899a5126-f424-48ea-9f45-1ab8c7a5ee9e.mp3?rss_browser=BAhJIgtDaHJvbWUGOgZFVA%3D%3D--d05363d83ce333c74f32188013892b2863ad051c" type="audio/mpeg" length="5840561"/>
+    </item>
+    <item>
+      <title>Where to find Episodes 2-7 of The Apology Line</title>
+      <description>
+        <![CDATA[<p>The Apology Line has moved. You can listen to all seven episodes ad-free by subscribing to Wondery+ in Apple Podcasts or the Wondery app, or you can listen on Amazon Music with your Prime Membership: Wondery.fm/The_Apology_Line </p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </description>
+      <itunes:title>Where to find Episodes 2-7 of The Apology Line</itunes:title>
+      <itunes:episodeType>bonus</itunes:episodeType>
+      <itunes:summary>The Apology Line has moved. You can listen to all seven episodes ad-free by subscribing to Wondery+ in Apple Podcasts or the Wondery app, or you can listen on Amazon Music with your Prime Membership: Wondery.fm/The_Apology_Line 
+
+See Privacy Policy at https://art19.com/privacy and California Privacy Notice at https://art19.com/privacy#do-not-sell-my-info.</itunes:summary>
+      <content:encoded>
+        <![CDATA[<p>The Apology Line has moved. You can listen to all seven episodes ad-free by subscribing to Wondery+ in Apple Podcasts or the Wondery app, or you can listen on Amazon Music with your Prime Membership: Wondery.fm/The_Apology_Line </p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </content:encoded>
+      <guid isPermaLink="false">gid://art19-episode-locator/V0/FZOLMXrfpw3yiFJUGu3jywchXoCWaRbhRJRCo3KN7iI</guid>
+      <pubDate>Mon, 03 Jul 2023 15:28:44 -0000</pubDate>
+      <itunes:explicit>yes</itunes:explicit>
+      <itunes:image href="https://content.production.cdn.art19.com/images/be/e1/82/c2/bee182c2-14b7-491b-b877-272ab6754025/bd4ab6d08d7b723678a682b6e399d26523245b3ba83f61617b9b28396aba1092b101cd86707576ec021b77e143b447463342b352f8825265b15310c989b6cb93.jpeg"/>
+      <itunes:keywords>SERIAL KILLER,TRUE CRIME,Society,This American Life,Murder,Apology,Apology Line,Binge Worthy Documentary,New York City,Binge-Worthy True Crime,exhibit c</itunes:keywords>
+      <itunes:duration>00:00:51</itunes:duration>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/chrt.fm/track/9EE2G/pdst.fm/e/rss.art19.com/episodes/99ae307d-b574-4893-87d0-100bf73e4406.mp3?rss_browser=BAhJIgtDaHJvbWUGOgZFVA%3D%3D--d05363d83ce333c74f32188013892b2863ad051c" type="audio/mpeg" length="827559"/>
+    </item>
+    <item>
+      <title>Who’s Sorry Now? | 1</title>
+      <description>
+        <![CDATA[<p>Marissa Bridge has only had a premonition twice in her life: one was on the day in 1981 that she met “Mr. Apology.” As posters for the Apology Line appear all over New York City, callers start to leave messages that confess their deepest secrets and darkest fears. Mr Apology quickly realizes he will have to do more than just sit back and listen.&nbsp;</p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </description>
+      <itunes:title>Who’s Sorry Now?</itunes:title>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>1</itunes:episode>
+      <itunes:summary>Marissa Bridge has only had a premonition twice in her life: one was on the day in 1981 that she met “Mr. Apology.” As posters for the Apology Line appear all over New York City, callers start to leave messages that confess their deepest secrets and darkest fears. Mr Apology quickly realizes he will have to do more than just sit back and listen. 
+
+See Privacy Policy at https://art19.com/privacy and California Privacy Notice at https://art19.com/privacy#do-not-sell-my-info.</itunes:summary>
+      <content:encoded>
+        <![CDATA[<p>Marissa Bridge has only had a premonition twice in her life: one was on the day in 1981 that she met “Mr. Apology.” As posters for the Apology Line appear all over New York City, callers start to leave messages that confess their deepest secrets and darkest fears. Mr Apology quickly realizes he will have to do more than just sit back and listen.&nbsp;</p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </content:encoded>
+      <guid isPermaLink="false">gid://art19-episode-locator/V0/eZqOUfJOCHVNII-XMFC9_A_GMTUUWYvZz_n_vPNiVK4</guid>
+      <pubDate>Sun, 17 Jan 2021 08:00:00 -0000</pubDate>
+      <itunes:explicit>yes</itunes:explicit>
+      <itunes:image href="https://content.production.cdn.art19.com/images/be/e1/82/c2/bee182c2-14b7-491b-b877-272ab6754025/bd4ab6d08d7b723678a682b6e399d26523245b3ba83f61617b9b28396aba1092b101cd86707576ec021b77e143b447463342b352f8825265b15310c989b6cb93.jpeg"/>
+      <itunes:keywords>Exhibit C,New York City,Murder,This American Life,society,serial killer,true crime,Apology Line,Binge Worthy Documentary ,Binge-worthy true crime,Apology</itunes:keywords>
+      <itunes:duration>00:37:20</itunes:duration>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/chrt.fm/track/9EE2G/pdst.fm/e/rss.art19.com/episodes/67461d56-cdd8-4b03-a957-3edb110232d4.mp3?rss_browser=BAhJIgtDaHJvbWUGOgZFVA%3D%3D--d05363d83ce333c74f32188013892b2863ad051c" type="audio/mpeg" length="35845433"/>
+    </item>
+    <item>
+      <title>Introducing: The Apology Line </title>
+      <description>
+        <![CDATA[<p>If you could call a number and say you’re sorry, and no one would know…what would you apologize for? For fifteen years, you could call a number in Manhattan and do just that. This is the story of the line, and the man at the other end who became consumed by his own creation. He was known as “Mr. Apology.” As thousands of callers flooded the line, confessing to everything from shoplifting to infidelity, drug dealing to murder, Mr. Apology realized he couldn’t just listen. He had to do something, even if it meant risking everything. From Wondery the makers of Dr Death and The Shrink Next Door, comes a story about empathy, deception and obsession. Marissa Bridge, who knew Mr. Apology better than anyone, hosts this six episode series.</p><p>All episodes are available now. You can binge the series ad-free on Wondery+ or on Amazon Music with a Prime membership or Amazon Music Unlimited subscription.</p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </description>
+      <itunes:title>Introducing: The Apology Line </itunes:title>
+      <itunes:episodeType>trailer</itunes:episodeType>
+      <itunes:summary>If you could call a number and say you’re sorry, and no one would know…what would you apologize for? For fifteen years, you could call a number in Manhattan and do just that. This is the story of the line, and the man at the other end who became consumed by his own creation. He was known as “Mr. Apology.” As thousands of callers flooded the line, confessing to everything from shoplifting to infidelity, drug dealing to murder, Mr. Apology realized he couldn’t just listen. He had to do something, even if it meant risking everything. From Wondery the makers of Dr Death and The Shrink Next Door, comes a story about empathy, deception and obsession. Marissa Bridge, who knew Mr. Apology better than anyone, hosts this six episode series.
+
+All episodes are available now. You can binge the series ad-free on Wondery+ or on Amazon Music with a Prime membership or Amazon Music Unlimited subscription.
+
+See Privacy Policy at https://art19.com/privacy and California Privacy Notice at https://art19.com/privacy#do-not-sell-my-info.</itunes:summary>
+      <content:encoded>
+        <![CDATA[<p>If you could call a number and say you’re sorry, and no one would know…what would you apologize for? For fifteen years, you could call a number in Manhattan and do just that. This is the story of the line, and the man at the other end who became consumed by his own creation. He was known as “Mr. Apology.” As thousands of callers flooded the line, confessing to everything from shoplifting to infidelity, drug dealing to murder, Mr. Apology realized he couldn’t just listen. He had to do something, even if it meant risking everything. From Wondery the makers of Dr Death and The Shrink Next Door, comes a story about empathy, deception and obsession. Marissa Bridge, who knew Mr. Apology better than anyone, hosts this six episode series.</p><p>All episodes are available now. You can binge the series ad-free on Wondery+ or on Amazon Music with a Prime membership or Amazon Music Unlimited subscription.</p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>]]>
+      </content:encoded>
+      <guid isPermaLink="false">gid://art19-episode-locator/V0/2E7Nce-ZiX0Rmo017w7js5BvvKiOIMjWELujxOvJync</guid>
+      <pubDate>Tue, 05 Jan 2021 03:26:59 -0000</pubDate>
+      <itunes:explicit>yes</itunes:explicit>
+      <itunes:image href="https://content.production.cdn.art19.com/images/be/e1/82/c2/bee182c2-14b7-491b-b877-272ab6754025/bd4ab6d08d7b723678a682b6e399d26523245b3ba83f61617b9b28396aba1092b101cd86707576ec021b77e143b447463342b352f8825265b15310c989b6cb93.jpeg"/>
+      <itunes:keywords>Exhibit C,New York City,Murder,This American Life,society,serial killer,true crime,Apology Line,Binge Worthy Documentary ,Binge-worthy true crime,Apology</itunes:keywords>
+      <itunes:duration>00:02:24</itunes:duration>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/chrt.fm/track/9EE2G/pdst.fm/e/rss.art19.com/episodes/a462e9fa-5e7b-4b0a-b992-d59fa1ca06cd.mp3?rss_browser=BAhJIgtDaHJvbWUGOgZFVA%3D%3D--d05363d83ce333c74f32188013892b2863ad051c" type="audio/mpeg" length="2320091"/>
+    </item>
+  </channel>
+</rss>

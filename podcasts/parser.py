@@ -10,6 +10,11 @@ class Parser:
         self.xml_data = self.response.text
         self.root = ET.fromstring(self.xml_data)
 
+    # def read_rss_file(self):
+    #     with open(self.rss_path, "rt", encoding="utf-8") as file:
+    #         rss_file = file.read()
+    #     return rss_file
+
     def rss_parser(self):
         root = self.root
         episodes = []
