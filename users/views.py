@@ -1,11 +1,13 @@
 import jwt, datetime
 
 from rest_framework.exceptions import APIException, AuthenticationFailed
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import Response, APIView
 from rest_framework import status
 
 from .models import User
-from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer
+from.utils import JwtHelper
+from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer, ChangePasswordSerializer
 
 # Create your views here.
 
@@ -65,3 +67,25 @@ class LogoutAPIView(APIView):
         response.delete_cookie(key="jwt")
         response.data = {"message": "succeded"}
         return response
+    
+
+class ChangePasswordAPIView(APIView):
+    authentication_classes = (JwtHelper,)
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
+
+    def post(self, request):
+        user:User = request.user
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        if not user.check_password(data["old_password"]):
+            return Response({"detail": "invalid password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        if user.check_password(data["new_password"]):
+            return Response({"detail": "new password can not be same as old password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        user.set_password(data["new_password"])
+        user.save()
+        return Response({"detail": "password changed successfully"}, status=status.HTTP_202_ACCEPTED)
