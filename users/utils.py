@@ -27,3 +27,9 @@ class JwtHelper:
         iat = payload.get("iat")
         timeout = exp_date - iat
         cache.set(key=f"user_{user_id} | {jti}", value=f"{iat}", timeout=timeout)
+
+    def check_cache(user_id, jti):
+        checking_cache = cache.get(f"user_{user_id} | {jti}")
+        if checking_cache:
+            return checking_cache
+        return None
