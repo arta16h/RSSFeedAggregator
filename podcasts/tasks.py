@@ -28,3 +28,8 @@ class PodcastHandler(Request):
         podcast_id = self.kwargs["podcast_id"]
         logger.error(f'Failed to update podcast: "id={podcast_id}" "{error_name}"')
         return super().on_retry(exc_info)
+    
+    def on_success(self, **kwargs):
+        logger.info(kwargs)
+        logger.info("Successfully updated")
+        return super().on_success(**kwargs)
