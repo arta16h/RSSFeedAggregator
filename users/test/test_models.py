@@ -33,3 +33,8 @@ class UserModelTest(TestCase):
     def test_str_method(self):
         self.assertEqual(str(self.user), self.user.phone)
 
+    def test_create_user(self):
+        user = User.objects.create_user(username="newuser", email="new@example.com", password="newpassword")
+        self.assertEqual(user.username, "newuser")
+        self.assertEqual(user.email, "new@example.com")
+        self.assertTrue(user.check_password("newpassword"))
