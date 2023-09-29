@@ -72,3 +72,8 @@ class ChangePasswordSerializer(serializers.Serializer):
             raise ValidationError("Password must have between 6 to 20 digits")
         return value
 
+    def validate_confirm(self, data):
+        if data['new_password'] != data['confirm_password']:
+            print(data["new_password"], data["confirm_password"])
+            raise serializers.ValidationError("Passwords don't match")
+        return data
