@@ -18,3 +18,7 @@ class UserModelTest(TestCase):
         max_length = self.user._meta.get_field('username').max_length
         self.assertEqual(max_length, 16)
 
+    def test_email_label(self):
+        field_label = self.user._meta.get_field('email').verbose_name
+        self.assertEqual(field_label, 'email')
+
