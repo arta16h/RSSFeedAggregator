@@ -33,3 +33,9 @@ class JwtHelper:
         if checking_cache:
             return checking_cache
         return None
+    
+    def check_exp(exp_date):
+        if datetime.now() < exp_date :
+            return True
+        else:
+            return False
