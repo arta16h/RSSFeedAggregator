@@ -22,3 +22,9 @@ class PodcastHandler(Request):
             send_failed=send_failed,
             return_ok=return_ok
         )
+    
+    def on_retry(self, exc_info):
+        error_name = type(exc_info.exception.exc).__name__
+        podcast_id = self.kwargs["podcast_id"]
+        logger.error(f'Failed to update podcast: "id={podcast_id}" "{error_name}"')
+        return super().on_retry(exc_info)
