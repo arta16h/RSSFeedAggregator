@@ -75,8 +75,7 @@ class Parser:
             poddata["contentType"] = base.findtext("channel/itunes:type")
             poddata["category"] = [
                 category.text
-                for category in base.findall("channel/itunes:category/itunes:category")]
-                       
+                for category in base.findall("channel/itunes:category/itunes:category")] 
             return {"poddata": poddata, "episodes": episodes}
 
         except requests.exceptions.RequestException as e:
@@ -111,7 +110,7 @@ class Parser:
                         duration=episode_data["duration"],
                         audioUrl=episode_data["audioUrl"],
                         pubDate=episode_data["pubDate"],
-                        explicit=episode_data["explicit"] == "yes",
+                        explicit=episode_data["explicit"],
                         imageUrl=episode_data.get("imageUrl", ""),
                         summary=episode_data["summary"],
                         description=episode_data["description"])
