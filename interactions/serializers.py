@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Like, Comment, Subscribe, Playlist
+from .models import Like, Comment, Subscribe, Playlist, Bookmark
 
 
 class SubscribeSerializer(ModelSerializer):
@@ -55,3 +55,12 @@ class PlaylistSerializer(ModelSerializer):
             instance.episodes.add(episode)
         instance.save()
         return instance
+    
+
+class BookmarkSerializer(ModelSerializer):
+    class META:
+        model = Bookmark
+        fields = [
+            "user",
+            "episode",
+        ]
