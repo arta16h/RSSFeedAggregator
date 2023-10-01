@@ -57,5 +57,5 @@ class Playlist:
 class Bookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    episode_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
