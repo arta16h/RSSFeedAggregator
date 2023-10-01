@@ -116,3 +116,9 @@ class SubscribeView(generics.ListCreateAPIView):
     def subscribed_list(self, request, *args, **kwargs):
         subscried = Subscribe.objects.filter(user=request.user).values_list("podcast__id", flat=True)
         return Response({"Subscribed": list(subscried)}, status=status.HTTP_200_OK)
+    
+
+class BookmarkAPIView(APIView):
+    authentication_classes = [JwtAuthentication]
+    permission_classes=[IsAuthenticated]
+
