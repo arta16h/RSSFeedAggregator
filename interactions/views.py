@@ -139,3 +139,6 @@ class BookmarkAPIView(APIView):
                 bookmark.save()
             return Response(data={"message": "succeeded"}, status=status.HTTP_201_CREATED)
         
+    def bookmarked_list(self, request, *args, **kwargs):
+        bookmarked = Bookmark.objects.filter(user=request.user).values_list("episode__id", flat=True)
+        return Response({"Bookmarked": list(bookmarked)}, status=status.HTTP_200_OK)
