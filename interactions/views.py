@@ -20,8 +20,8 @@ class LikeAPIView(APIView):
         episode_id = request.data.get("episode_id")
 
         try:
-            existing_like = Like.objects.get(user=user, episode=episode_id)
-            existing_like.delete()
+            already_liked = Like.objects.get(user=user, episode=episode_id)
+            already_liked.delete()
             return Response({"detail": "Like removed successfully."}, status=status.HTTP_200_OK)
         
         except Like.DoesNotExist:
@@ -37,7 +37,6 @@ class LikeAPIView(APIView):
                 if episode:
                     like = Like(content_object = episode, account = request.user)
                     like.save()
-
             return Response(data={"message": "succeeded"}, status=status.HTTP_201_CREATED)
         
     def liked_list(self, request, *args, **kwargs):
@@ -122,3 +121,21 @@ class BookmarkAPIView(APIView):
     authentication_classes = [JwtAuthentication]
     permission_classes=[IsAuthenticated]
 
+    def create(self, request):
+        bookmark_serializer = BookmarkSerializer(data = request.data)
+        bookmark_serializer.is_valid(raise_exception=True)
+        user = request.user
+        episode_id = request.data.get("episode_id")
+
+        try:
+            already_bookmarked = Bookmark.objects.get(user=user, episode=episode_id)
+            already_bookmarked.delete()
+            return Response({"detail": "Bookmark removed successfully."}, status=status.HTTP_200_OK)
+        
+        except Bookmark.DoesNotExist:
+            episode = Episode.objects.get(id = bookmark_serializer.validated_data.get("episode_id"))
+            if episode:
+                bookmark = Bookmark(content_object = episode, account = request.user)
+                bookmark.save()
+            return Response(data={"message": "succeeded"}, status=status.HTTP_201_CREATED)
+        
