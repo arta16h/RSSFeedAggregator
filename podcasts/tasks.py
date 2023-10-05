@@ -2,7 +2,7 @@ import logging
 from celery import shared_task, Task
 from celery.worker.request import Request
 from celery.exceptions import Retry
-from .models import Podcast
+from .parser import save_podcast_to_db
 
 
 logger = logging.getLogger('celery-logger')
@@ -41,3 +41,19 @@ class BaseTask(Task):
     max_retries = 5
     retry_backoff = True
     retry_jitter = False
+
+
+@shared_task(bind=True, base=BaseTask)
+def saving_to_db(self, data):
+    message = f"trying to save podcast/episode to db"
+    logger.info(message)
+
+    try: 
+        save_podcast_to_db(data=data)
+        message = f"saving podcast/episode to db succeeded!"
+        logger.info(message)
+
+    except Exception as e :
+        message = f"saving podcast/episode to db failed!" 
+        logger.error(message)
+        raise e
