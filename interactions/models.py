@@ -53,7 +53,16 @@ class Playlist(models.Model):
 
 class Bookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    episode = models.ForeignKey(Episode, on_delete=models.CASCADE, default=None)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.user
+    
+
+class Viewed(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+    viewed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} viewed {self.episode.title}"
