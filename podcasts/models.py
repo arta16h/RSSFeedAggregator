@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Owner:
+class Owner(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,7 +35,7 @@ class Podcast(models.Model):
     pubDate = models.DateTimeField(auto_now_add=True)
     imageUrl = models.URLField(max_length=255, null=True, blank=True)
     subtitle = models.CharField(max_length=255, null=True, blank=True)
-    # keywords = models.TextField(null=True, blank=True)
+    keywords = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.title

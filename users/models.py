@@ -27,7 +27,7 @@ class UserManager(BaseUserManager):
 
         return self.create_user(phone, password, **other_fields)
     
-PHONE_REGEX_PATTERN = r"^(\\+98|0)?9\\d{9}$"
+PHONE_REGEX_PATTERN = r"^(\\+98|0)?9\d{9}$"
 
 def phone_validator(phone:str):
     if not (matched := re.fullmatch(PHONE_REGEX_PATTERN, phone.strip())):

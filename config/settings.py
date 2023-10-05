@@ -137,35 +137,3 @@ AUTHENTICATION_BACKENDS = [
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'celery': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': './log/celery_log.log',
-            'formatter':'verbose',
-        },
-    },
-    "formatters":{
-        'verbose':{
-            'format': "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-            'style': '{',
-        },
-    },
-    'loggers': {
-        'django-celery': {
-            'handlers': ['celery'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
-
-CACHES = {
-    'default':{
-        'BACKEND':'django_redis.cache.RedisCache',
-        'LOCATION':'redis://localhost:6379/0',
-        'OPTIONS': {'CLIENT_CLASS': 'django_redis.client.DefaultClient'}}
-        }

@@ -46,7 +46,7 @@ class Parser:
                     "explicit": item.findtext("itunes:explicit"),
                     "imageUrl": item.findtext("itunes:image"),
                     "summary": item.findtext("itunes:summary"),
-                    "description": item.findtext(".//content:encoded"),
+                    "description": item.findtext("description"),
                 }
                 explicit_element = item.find("itunes:explicit")
 

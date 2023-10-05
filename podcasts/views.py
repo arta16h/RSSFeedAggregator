@@ -20,12 +20,14 @@ class EpisodeListView(generics.ListCreateAPIView):
         return queryset
     
 
-class PodcastListView(generics.ListCreateAPIView):
-    serializer_class = PodcastSerializer
-
-    def get_queryset(self):
+class PodcastListView(APIView):
+    
+    def get(self, request) :
         queryset = Podcast.objects.all()
-        return queryset
+        serializer = PodcastSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
     
 
 class PodcastDetailView(generics.RetrieveUpdateDestroyAPIView):

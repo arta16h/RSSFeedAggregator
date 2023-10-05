@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from users.auth import JwtAuthentication
 from podcasts.models import Episode, Podcast
+from .models import Bookmark
 from .serializers import *
 
 # Create your views here.

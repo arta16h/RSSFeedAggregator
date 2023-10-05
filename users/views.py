@@ -6,7 +6,7 @@ from rest_framework.views import Response, APIView
 from rest_framework import status
 
 from .models import User
-from.utils import JwtHelper
+from.auth import JwtAuthentication
 from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer, ChangePasswordSerializer
 
 # Create your views here.
@@ -70,7 +70,7 @@ class LogoutAPIView(APIView):
     
 
 class ChangePasswordAPIView(APIView):
-    authentication_classes = (JwtHelper,)
+    authentication_classes = (JwtAuthentication,)
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
 
