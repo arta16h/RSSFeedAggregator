@@ -5,8 +5,9 @@ from rest_framework.response import Response
 
 from users.auth import JwtAuthentication
 from podcasts.models import Episode, Podcast
-from .models import Bookmark
+from .models import Bookmark, Viewed, Episode
 from .serializers import *
+from podcasts.serializers import EpisodeSerializer
 
 # Create your views here.
 
@@ -143,3 +144,14 @@ class BookmarkAPIView(APIView):
     def bookmarked_list(self, request, *args, **kwargs):
         bookmarked = Bookmark.objects.filter(user=request.user).values_list("episode__id", flat=True)
         return Response({"Bookmarked": list(bookmarked)}, status=status.HTTP_200_OK)
+    
+
+class ViewedEpisodesAPIView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = EpisodeSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        viewed_episodes = Viewed.objects.filter(user=user).values_list("episode", flat=True)
+        queryset = Episode.objects.filter(id__in=viewed_episodes)
+        return queryset
