@@ -53,7 +53,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def get_access_token(self):
-        return JwtHelper.generate_jwt_token(self.id, settings.SECRET_KEY, 60)
+        return JwtHelper.generate_jwt_token(self.id, settings.SECRET_KEY, 30)
+    
+    def get_refresh_token(self):
+        return JwtHelper.generate_jwt_token(self.id, settings.SECRET_KEY, 720)
 
     def __str__(self):
         return f"{self.phone}"
