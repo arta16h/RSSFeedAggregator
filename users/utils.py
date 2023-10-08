@@ -1,11 +1,17 @@
 import jwt
+from uuid import uuid4
 from datetime import timedelta, datetime
-from config import settings
+
 from django.core.cache import cache
+
+from config import settings
 from .models import User
 
-class JwtHelper:
+def generate_jti():
+    return str(uuid4().hex)
 
+
+class JwtHelper:
     def authenticate(self, request, phone=None, password=None, **kwargs):
         try:
             user = User.objects.get(phone=phone)
@@ -14,6 +20,7 @@ class JwtHelper:
 
         if user.check_password(password):
             return user
+        
     @staticmethod
     def generate_jwt_token(user_id, secret_key, expires_in_minutes):
         payload = {
