@@ -86,8 +86,7 @@ class Parser:
         poddata = data.get("poddata")
         episodes = data.get("episodes")
         with transaction.atomic():
-            podcast, created = Podcast.objects.get_or_create(
-                title=poddata["title"])
+            podcast = Podcast.objects.get_or_create(title=poddata["title"])
 
             podcast.description = poddata["description"]
             podcast.category = poddata["category"]
@@ -116,3 +115,4 @@ class Parser:
                         description=episode_data["description"])
                     episode_list.append(episode)
             Episode.objects.bulk_create(episode_list)
+            
