@@ -12,15 +12,6 @@ def generate_jti():
 
 
 class JwtHelper:
-    def authenticate(self, request, phone=None, password=None, **kwargs):
-        try:
-            user = User.objects.get(phone=phone)
-        except User.DoesNotExist:
-            return None
-
-        if user.check_password(password):
-            return user
-        
     @staticmethod
     def generate_jwt_token(user_id, secret_key, expires_in_minutes):
         payload = {
