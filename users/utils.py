@@ -5,7 +5,6 @@ from datetime import timedelta, datetime
 from django.core.cache import cache
 
 from config import settings
-from .models import User
 
 def generate_jti():
     return str(uuid4().hex)
