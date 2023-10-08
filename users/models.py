@@ -3,6 +3,9 @@ import re
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+from .utils import JwtHelper
+from config import settings
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -48,6 +51,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = []
+
+    def get_access_token(self):
+        return JwtHelper.generate_jwt_token(self.id, settings.SECRET_KEY, 60)
 
     def __str__(self):
         return f"{self.phone}"
