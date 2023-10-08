@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 # Create your models here.
 
@@ -56,3 +57,10 @@ class Episode(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    def __str__(self):
+        return f"{self.user | self.message}"
