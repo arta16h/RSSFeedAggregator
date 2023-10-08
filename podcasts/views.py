@@ -67,3 +67,4 @@ class PodcastRecommendationAPIView(APIView):
         user = request.user
         function = self.recommendations_methods[method]
         return Response(function(user))
+    
