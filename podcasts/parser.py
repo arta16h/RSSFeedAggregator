@@ -4,16 +4,18 @@ from django.db import transaction
 from .models import Podcast, Episode
 
 class Parser:
-    def __init__(self, url) :
+    def __init__(self, file=None, path=None, url=None) :
+        self.file = file
+        self.path = path
         self.response = requests.get(url)
         self.response.raise_for_status()
         self.xml_data = self.response.text
         self.base = ET.fromstring(self.xml_data)
 
-    # def read_rss_file(self):
-    #     with open(self.rss_path, "rt", encoding="utf-8") as file:
-    #         rss_file = file.read()
-    #     return rss_file
+    def read_rss_file(self):
+        with open(self.rss_path, "rt", encoding="utf-8") as f:
+            file = f.read()
+        return file
 
     def rss_parser(self):
         base = self.base
