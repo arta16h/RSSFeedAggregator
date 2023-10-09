@@ -95,6 +95,7 @@ class ChangePasswordAPIView(APIView):
         data = serializer.validated_data
 
         if not user.check_password(data["old_password"]):
+            logger.error("Invalid password!")
             return Response({"detail": "invalid password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
         if user.check_password(data["new_password"]):
@@ -102,4 +103,5 @@ class ChangePasswordAPIView(APIView):
         
         user.set_password(data["new_password"])
         user.save()
+        logger.info(f"{user}'s password changed!")
         return Response({"detail": "password changed successfully"}, status=status.HTTP_202_ACCEPTED)
