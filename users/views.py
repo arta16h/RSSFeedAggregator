@@ -41,7 +41,7 @@ class VerifyOTPAPIView(APIView):
             user=User.objects.get(phone=request.session.get("phone"))
             access_token=user.get_access_token()
             refresh_token=user.get_refresh_token()
-            logger.info(f"{user.username} is login")
+            logger.info("otp verified!")
             return Response(data={"message":"succeeded", "AT":access_token, "RT":refresh_token})
         logger.error("Login OTP Serializer is Invalid!")
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -54,9 +54,11 @@ class LoginAPIView(APIView):
         user = User.objects.filter(phone= phone).first()
 
         if not User:
+            logger.error("User does not exist!")
             raise APIException("User does not exist!")
 
         if not user.check_password(password):
+            logger.error("Password is not correct!")
             raise AuthenticationFailed("Password is not correct!")
 
         payload = {
@@ -68,6 +70,7 @@ class LoginAPIView(APIView):
         response = Response()
         response.set_cookie(key="jwt", value=token, httponly=True)
         response.data = {"jwt":token}
+        logger.info(f"User {phone} is now login!")
         return response
     
 
