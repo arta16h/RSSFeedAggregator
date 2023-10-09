@@ -1,4 +1,5 @@
 import jwt, datetime
+import logging
 
 from rest_framework.exceptions import APIException, AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
@@ -11,11 +12,14 @@ from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer, Ch
 
 # Create your views here.
 
+logger = logging.getLogger('django_API')
+
 class RegisterAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        logger.info(f"User {serializer.phone} created!")
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
