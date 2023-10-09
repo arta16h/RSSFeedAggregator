@@ -74,8 +74,10 @@ class PodcastRecommendationAPIView(APIView):
 
     def get(self, request, method):
         if method not in self.recommendations_methods:
+            logger.error("Method not found!")
             return Response({"details":"Recommendation method not found"}, status=status.HTTP_400_BAD_REQUEST)
         user = request.user
         function = self.recommendations_methods[method]
+        logger.info("Showing recomendations based on your method!")
         return Response(function(user))
     
