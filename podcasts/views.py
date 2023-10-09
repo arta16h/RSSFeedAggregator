@@ -20,6 +20,7 @@ class EpisodeListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Episode.objects.all()
+        logger.info("listing all episodes!")
         return queryset
     
 
