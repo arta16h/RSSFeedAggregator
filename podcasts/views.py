@@ -1,3 +1,4 @@
+import logging
 from django.http import Http404
 
 from rest_framework import status, generics
@@ -11,6 +12,8 @@ from .serializers import PodcastSerializer, EpisodeSerializer
 from .utils import like_based_recomended_podcasts, subscription_based_recommended_podcasts
 
 # Create your views here.
+
+logger = logging.getLogger('django_API')
 
 class EpisodeListView(generics.ListCreateAPIView):
     serializer_class = EpisodeSerializer
