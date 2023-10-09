@@ -31,8 +31,6 @@ class PodcastListView(APIView):
         serializer = PodcastSerializer(queryset, many=True)
         logger.info("listing all podcasts!")
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
     
 
 class PodcastDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -41,8 +39,12 @@ class PodcastDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         pk = self.kwargs["pk"]
         queryset = Podcast.objects.filter(pk=pk)
+        
         if not queryset.exists():
+            logger.error("Podcast does not exist!")
             raise Http404("Podcast not found")
+        
+        logger.info("Podcast details is shown!")
         return queryset.first()
     
 
