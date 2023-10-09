@@ -29,6 +29,7 @@ class PodcastListView(APIView):
     def get(self, request) :
         queryset = Podcast.objects.all()
         serializer = PodcastSerializer(queryset, many=True)
+        logger.info("listing all podcasts!")
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
