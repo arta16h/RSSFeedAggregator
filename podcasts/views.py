@@ -39,7 +39,7 @@ class PodcastDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         pk = self.kwargs["pk"]
         queryset = Podcast.objects.filter(pk=pk)
-        
+
         if not queryset.exists():
             logger.error("Podcast does not exist!")
             raise Http404("Podcast not found")
@@ -54,8 +54,12 @@ class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         pk = self.kwargs["pk"]
         queryset = Episode.objects.filter(pk=pk)
+
         if not queryset.exists():
-            raise Http404("Podcast episode not found")
+            logger.error("Episode does not exist!")
+            raise Http404("Podcast episode not found!")
+        
+        logger.info("Episode detail is shown!")
         return queryset.first()
     
 
