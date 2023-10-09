@@ -41,7 +41,10 @@ class VerifyOTPAPIView(APIView):
             user=User.objects.get(phone=request.session.get("phone"))
             access_token=user.get_access_token()
             refresh_token=user.get_refresh_token()
+            logger.info(f"{user.username} is login")
             return Response(data={"message":"succeeded", "AT":access_token, "RT":refresh_token})
+        logger.error("Login OTP Serializer is Invalid!")
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
         
 class LoginAPIView(APIView):
