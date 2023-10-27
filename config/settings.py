@@ -137,3 +137,28 @@ AUTHENTICATION_BACKENDS = [
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
 
+LOGGING = {
+    'version' : 1,
+    'disable_existing_loggers' : False,
+    'handlers' : {
+        'user_activity' : {
+            'level' : 'DEBUG',
+            'class' : 'logging.FileHandler',
+            'file_name' : 'user_activity_file.log',
+            'formatter' : 'main_formatter'
+        }
+    },
+    'formatters' : {
+        'main_formatter' : {
+            'format' : '{level_name} | {asctime} | {message}',
+            'style' : '{'
+        }
+    },
+    'loggers' : {
+        'user_actions' : {
+            'handlers' : ['user_activity'],
+            'level' : 'INFO',
+            'propagate' : False
+        }
+    }
+}
