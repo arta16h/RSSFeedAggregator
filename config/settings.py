@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'interactions',
     'podcasts',
     'users',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -134,8 +136,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://redis:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://redis:6379/0')
 
 LOGGING = {
     'version' : 1,
@@ -144,7 +146,7 @@ LOGGING = {
         'user_activity' : {
             'level' : 'DEBUG',
             'class' : 'logging.FileHandler',
-            'file_name' : 'user_activity_file.log',
+            'filename' : 'user_activity_file.log',
             'formatter' : 'main_formatter'
         }
     },
@@ -160,5 +162,12 @@ LOGGING = {
             'level' : 'INFO',
             'propagate' : False
         }
+    }
+}
+
+CELERY_BEAT_SCHEDULE = {
+    '#TaskName' : {
+        'task' : '#TaskAddress',
+        'schedule' : crontab(hour="*/12")
     }
 }

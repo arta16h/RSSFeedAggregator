@@ -2,7 +2,7 @@ import logging
 from celery import shared_task, Task
 from celery.worker.request import Request
 from celery.exceptions import Retry
-from .parser import save_podcast_to_db, rss_parser
+from .parser import Parser
 
 
 logger = logging.getLogger('celery-logger')
@@ -46,9 +46,10 @@ class BaseTask(Task):
 def parsing_rss(self, data):
     message = f"trying to parse rss link"
     logger.info(message)
+    parser = Parser()
 
     try: 
-        rss_parser(data=data)
+        parser.rss_parser(data=data)
         message = f"parsing rss link succeeded!"
         logger.info(message)
 
@@ -64,7 +65,8 @@ def saving_to_db(self, data):
     logger.info(message)
 
     try: 
-        save_podcast_to_db(data=data)
+        parser = Parser()
+        parser.save_podcast_to_db(data=data)
         message = f"saving podcast/episode to db succeeded!"
         logger.info(message)
 
