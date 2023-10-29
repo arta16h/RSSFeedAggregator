@@ -10,11 +10,11 @@ logger = logging.getLogger('user_actions')
 
 def log_user_activity(channel, method, property, body) :
     if body[:8] == 'success' :    
-        logger.info(body[7:])
-        print(":D")
+        # logger.info(body[7:])
+        print("1")
     elif body[:8] == 'error!!' :
-        logger.error(body[7:])
-        print(":|")
+        # logger.error(body[7:])
+        print("2")
 
 channel.basic_consume(queue='signup-login', on_message_callback=log_user_activity, auto_ack=True)
 print('Start Consuming...')

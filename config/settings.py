@@ -167,6 +167,11 @@ LOGGING = {
             'handlers' : ['user_activity', 'elk_handler'],
             'level' : 'INFO',
             'propagate' : False
+        },
+        'api_logger' : {
+            'handlers' : ['elk_handler'],
+            'level' : 'INFO',
+            'propagate' : False
         }
     }
 }
