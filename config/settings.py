@@ -164,7 +164,7 @@ LOGGING = {
     },
     'loggers' : {
         'user_actions' : {
-            'handlers' : ['user_activity'],
+            'handlers' : ['user_activity', 'elk_handler'],
             'level' : 'INFO',
             'propagate' : False
         }
