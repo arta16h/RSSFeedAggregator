@@ -147,7 +147,12 @@ LOGGING = {
             'level' : 'DEBUG',
             'class' : 'logging.FileHandler',
             'filename' : 'user_activity_file.log',
-            'formatter' : 'main_formatter'
+            'formatter' : 'main_formatter',
+        },
+        'elk_handler' : {
+            'level' : 'INFO',
+            'class' : 'logging.FileHandler',
+            'formatter' : 'elk_formatter',
         }
     },
     'formatters' : {

@@ -9,7 +9,8 @@ class Publisher:
         self.connection = pika.BlockingConnection(self.connection_parameter)
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue='signup-login')
-        self.channel.basic_publish(exchange='', routing_key=queue, body='success' + message)
+        a = self.channel.basic_publish(exchange='', routing_key=queue, body='success' + message)
+        print(a)
         print(f'{message} Published Successfully!')
         self.connection.close()
 
@@ -20,3 +21,6 @@ class Publisher:
         self.channel.basic_publish(exchange='', routing_key=queue, body='error!!' + message)
         print(f'{message} Published Successfully!')
         self.connection.close()
+
+publishh = Publisher()
+publishh.publish("hi!", "signup-login")
