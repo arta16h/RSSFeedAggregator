@@ -1,5 +1,5 @@
 from logging import Handler
-import datetime
+from datetime import datetime
 import time
 import json
 

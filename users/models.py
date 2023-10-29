@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(validators=[phone_validator], unique=True, max_length=20)
     username = models.CharField(max_length=50,unique=True)
     password = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
