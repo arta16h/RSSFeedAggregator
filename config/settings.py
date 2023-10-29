@@ -151,7 +151,8 @@ LOGGING = {
         },
         'elk_handler' : {
             'level' : 'INFO',
-            'class' : 'logging.FileHandler',
+            'host' : 'localhost',
+            'class' : 'config.elk.ElkHandler',
             'formatter' : 'elk_formatter',
         }
     },
