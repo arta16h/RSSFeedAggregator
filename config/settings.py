@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.mw.LogMiddleWare'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -139,6 +140,14 @@ AUTHENTICATION_BACKENDS = [
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://redis:6379/0')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://redis:6379/0')
 
+ELASTICSEARCH_HOST = 'localhost'
+ELASTICSEARCH_PORT = 9200
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://localhost:9200'
+    },
+}
+
 LOGGING = {
     'version' : 1,
     'disable_existing_loggers' : False,
@@ -149,12 +158,12 @@ LOGGING = {
             'filename' : 'user_activity_file.log',
             'formatter' : 'main_formatter',
         },
-        'elk_handler' : {
-            'level' : 'INFO',
-            'host' : 'localhost',
-            'class' : 'config.elk.ElkHandler',
-            'formatter' : 'elk_formatter',
-        }
+        # 'elk_handler' : {
+        #     'level' : 'INFO',
+        #     'host' : 'localhost',
+        #     'class' : 'config.elk.ElkHandler',
+        #     'formatter' : 'elk_formatter',
+        # }
     },
     'formatters' : {
         'main_formatter' : {
@@ -164,12 +173,12 @@ LOGGING = {
     },
     'loggers' : {
         'user_actions' : {
-            'handlers' : ['user_activity', 'elk_handler'],
+            'handlers' : ['user_activity'],
             'level' : 'INFO',
             'propagate' : False
         },
         'api_logger' : {
-            'handlers' : ['elk_handler'],
+            'handlers' : [],
             'level' : 'INFO',
             'propagate' : False
         }

@@ -9,12 +9,15 @@ channel.queue_declare(queue='signup-login')
 logger = logging.getLogger('user_actions')
 
 def log_user_activity(channel, method, property, body) :
-    if body[:8] == 'success' :    
-        # logger.info(body[7:])
-        print("1")
-    elif body[:8] == 'error!!' :
-        # logger.error(body[7:])
+    body = body.decode("utf-8")
+    if body.startswith('success') :    
+        logger.info(body.lstrip("success"))
+        print(body)
+    elif body.startswith('error!!') :
+        logger.error(body.lstrip("error!!"))
         print("2")
+    else :
+        print(body)
 
 channel.basic_consume(queue='signup-login', on_message_callback=log_user_activity, auto_ack=True)
 print('Start Consuming...')
