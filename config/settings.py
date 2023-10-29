@@ -162,7 +162,7 @@ LOGGING = {
             'level' : 'INFO',
             'host' : 'http://localhost:9200',
             'class' : 'config.elk.ElkHandler',
-            'formatter' : 'main_formatter'
+            # 'formatter' : 'main_formatter'
         }
     },
     'formatters' : {
