@@ -22,7 +22,7 @@ class LogSender:
 
 class ElkHandler(Handler) :
     def __init__(self, host, *args, **kwargs) :
-        super().__init__(level=kwargs.get('level'))
+        super().__init__(*args, **kwargs)
         self.host = host
         self.formatter = kwargs.get('formatter')
         self.elk = Elasticsearch(hosts=self.host)

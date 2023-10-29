@@ -156,14 +156,14 @@ LOGGING = {
             'level' : 'DEBUG',
             'class' : 'logging.FileHandler',
             'filename' : 'user_activity_file.log',
-            'formatter' : 'main_formatter',
+            'formatter' : 'main_formatter'
         },
-        # 'elk_handler' : {
-        #     'level' : 'INFO',
-        #     'host' : 'localhost',
-        #     'class' : 'config.elk.ElkHandler',
-        #     'formatter' : 'elk_formatter',
-        # }
+        'elk_handler' : {
+            'level' : 'INFO',
+            'host' : 'http://localhost:9200',
+            'class' : 'config.elk.ElkHandler',
+            'formatter' : 'main_formatter'
+        }
     },
     'formatters' : {
         'main_formatter' : {
@@ -173,12 +173,12 @@ LOGGING = {
     },
     'loggers' : {
         'user_actions' : {
-            'handlers' : ['user_activity'],
+            'handlers' : ['user_activity', 'elk_handler'],
             'level' : 'INFO',
             'propagate' : False
         },
         'api_logger' : {
-            'handlers' : [],
+            'handlers' : ['elk_handler'],
             'level' : 'INFO',
             'propagate' : False
         }
