@@ -1,24 +1,28 @@
 import pika
 import logging
 
-connection_parameter = pika.ConnectionParameters('localhost')
-connection = pika.BlockingConnection(connection_parameter)
-channel = connection.channel()
-channel.queue_declare(queue='signup-login')
+class UserActivityConsumer :
+    def __init__(self) -> None:
+        self.logger = logging.getLogger('user_actions')
+        self.connection_parameter = pika.ConnectionParameters('localhost')
+        self.connection = pika.BlockingConnection(self.connection_parameter)
+        self.channel = self.connection.channel()
+        self.channel.queue_declare(queue='signup-login')
 
-logger = logging.getLogger('user_actions')
 
-def log_user_activity(channel, method, property, body) :
-    body = body.decode("utf-8")
-    if body.startswith('success') :    
-        logger.info(body.lstrip("success"))
-        print(body)
-    elif body.startswith('error!!') :
-        logger.error(body.lstrip("error!!"))
-        print("2")
-    else :
-        print(body)
+    def consume(self):
+        self.channel.basic_consume(queue='signup-login', on_message_callback=self.log_user_activity, auto_ack=True)
+        print('Start Consuming...')
+        self.channel.start_consuming()
 
-channel.basic_consume(queue='signup-login', on_message_callback=log_user_activity, auto_ack=True)
-print('Start Consuming...')
-channel.start_consuming()
+    def log_user_activity(self, channel, method, property, body) :
+        body = body.decode("utf-8")
+        if body.startswith('success') :    
+            self.logger.info(body.lstrip("success"))
+            print(body)
+        elif body.startswith('error!!') :
+            self.logger.error(body.lstrip("error!!"))
+            print("Booooo")
+        else :
+            print(body)
+
