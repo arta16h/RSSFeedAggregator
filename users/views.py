@@ -1,5 +1,5 @@
 import jwt, datetime
-from config.publisher import Publisher
+from config.publisher_user import Publisher
 
 from rest_framework.exceptions import APIException, AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
