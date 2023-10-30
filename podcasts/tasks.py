@@ -38,6 +38,16 @@ class BaseTask(Task):
     retry_backoff = True
     retry_jitter = False
 
+    
+@shared_task(bind=True, base=BaseTask)
+def reading_file(self, data):
+    parser = Parser()
+    try :
+        parser.read_rss_file(data=data)
+    except Exception as e:
+        raise e
+
+
 @shared_task(bind=True, base=BaseTask)
 def parsing_rss(self, data):
     # message = f"trying to parse rss link"
