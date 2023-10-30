@@ -38,7 +38,7 @@ class BaseTask(Task):
     retry_backoff = True
     retry_jitter = False
 
-    
+
 @shared_task(bind=True, base=BaseTask)
 def reading_file(self, data):
     parser = Parser()
@@ -66,7 +66,7 @@ def parsing_rss(self, data):
     
 
 @shared_task(bind=True, base=BaseTask)
-def saving_to_db(self, data):
+def update(self, data):
     # message = f"trying to save podcast/episode to db"
     # logger.info(message)
 
