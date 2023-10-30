@@ -22,7 +22,7 @@ class UserActivityConsumer :
             print(body)
         elif body.startswith('error!!') :
             self.logger.error(body.lstrip("error!!"))
-            print("Booooo")
-        else :
             print(body)
+        else :
+            print("Error!")
 
