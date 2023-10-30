@@ -45,8 +45,10 @@ class VerifyOTPAPIView(APIView):
             user=User.objects.get(phone=request.session.get("phone"))
             access_token=user.get_access_token()
             refresh_token=user.get_refresh_token()
+            publisher.publish("OTP Verified!", queue="signup-login")
             # logger.info("otp verified!")
             return Response(data={"message":"succeeded", "AT":access_token, "RT":refresh_token})
+        publisher.error_publish("Login OTP Serializer is Invalid!", queue="signup-login")
         # logger.error("Login OTP Serializer is Invalid!")
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -58,11 +60,13 @@ class LoginAPIView(APIView):
         user = User.objects.filter(phone= phone).first()
 
         if not User:
+            publisher.error_publish("User does Not Exist!", queue="signup-login")
             # logger.error("User does not exist!")
             raise APIException("User does not exist!")
 
         if not user.check_password(password):
             # logger.error("Password is not correct!")
+            publisher.error_publish("Password is Not Correct!", queue="signup-login")
             raise AuthenticationFailed("Password is not correct!")
 
         payload = {
@@ -74,6 +78,7 @@ class LoginAPIView(APIView):
         response = Response()
         response.set_cookie(key="jwt", value=token, httponly=True)
         response.data = {"jwt":token}
+        publisher.publish(f"User {phone} is now Login!", queue="signup-login")
         # logger.info(f"User {phone} is now login!")
         return response
     
@@ -83,6 +88,7 @@ class LogoutAPIView(APIView):
         response = Response()
         response.delete_cookie(key="jwt")
         response.data = {"message": "succeded"}
+        publisher.publish("User Got Logout!", queue="signup-login")
         # logger.info("User got logout!")
         return response
     
@@ -99,13 +105,16 @@ class ChangePasswordAPIView(APIView):
         data = serializer.validated_data
 
         if not user.check_password(data["old_password"]):
+            publisher.error_publish("Invalid Password!", queue="signup-login")
             # logger.error("Invalid password!")
             return Response({"detail": "invalid password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
         if user.check_password(data["new_password"]):
+            publisher.error_publish("New PAssword, Same as the Old Password!", queue="signup-login")
             return Response({"detail": "new password can not be same as old password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
         user.set_password(data["new_password"])
         user.save()
+        publisher.publish(f"{user}'s password changed!", queue="signup-login")
         # logger.info(f"{user}'s password changed!")
         return Response({"detail": "password changed successfully"}, status=status.HTTP_202_ACCEPTED)
