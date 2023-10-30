@@ -4,7 +4,6 @@ class Publisher:
     def __init__(self) :
         self.connection_parameter = pika.ConnectionParameters('localhost')
 
-
     def publish(self, message, queue) :
         self.connection = pika.BlockingConnection(self.connection_parameter)
         self.channel = self.connection.channel()
