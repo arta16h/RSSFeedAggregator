@@ -8,19 +8,21 @@ from rest_framework.permissions import IsAuthenticated
 
 from users.utils import JwtHelper
 from .models import Podcast, Episode
+from config.publisher import Publisher
 from .serializers import PodcastSerializer, EpisodeSerializer
 from .utils import like_based_recomended_podcasts, subscription_based_recommended_podcasts
 
 # Create your views here.
 
-logger = logging.getLogger('django_API')
+publisher = Publisher()
 
 class EpisodeListView(generics.ListCreateAPIView):
     serializer_class = EpisodeSerializer
 
     def get_queryset(self):
         queryset = Episode.objects.all()
-        logger.info("listing all episodes!")
+        publisher.publish("Listing all Episodes...", queue="signup-login")
+        # logger.info("listing all episodes!")
         return queryset
     
 
@@ -29,7 +31,8 @@ class PodcastListView(APIView):
     def get(self, request) :
         queryset = Podcast.objects.all()
         serializer = PodcastSerializer(queryset, many=True)
-        logger.info("listing all podcasts!")
+        publisher.publish("Listing all Podcasts...", queue="signup-login")
+        # logger.info("listing all podcasts!")
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
@@ -41,10 +44,12 @@ class PodcastDetailView(generics.RetrieveUpdateDestroyAPIView):
         queryset = Podcast.objects.filter(pk=pk)
 
         if not queryset.exists():
-            logger.error("Podcast does not exist!")
+            publisher.error_publish("Podcast does Not Exist!", queue="signup-login")
+            # logger.error("Podcast does not exist!")
             raise Http404("Podcast not found")
         
-        logger.info("Podcast details is shown!")
+        publisher.publish("Podcast Detail is Shown.", queue="signup-login")
+        # logger.info("Podcast details is shown!")
         return queryset.first()
     
 
@@ -56,10 +61,12 @@ class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
         queryset = Episode.objects.filter(pk=pk)
 
         if not queryset.exists():
-            logger.error("Episode does not exist!")
+            publisher.error_publish("Episode does Not Exist!", queue="signup-login")
+            # logger.error("Episode does not exist!")
             raise Http404("Podcast episode not found!")
         
-        logger.info("Episode detail is shown!")
+        publisher.publish("Episode Detail is Shown.", queue="signup-login")
+        # logger.info("Episode detail is shown!")
         return queryset.first()
     
 
@@ -74,10 +81,12 @@ class PodcastRecommendationAPIView(APIView):
 
     def get(self, request, method):
         if method not in self.recommendations_methods:
-            logger.error("Method not found!")
+            publisher.error_publish("Method Not Found!", queue="signup-login")
+            # logger.error("Method not found!")
             return Response({"details":"Recommendation method not found"}, status=status.HTTP_400_BAD_REQUEST)
         user = request.user
         function = self.recommendations_methods[method]
-        logger.info("Showing recomendations based on your method!")
+        publisher.publish("Showing Recommendations Based on Your Method...", queue="signup-login")
+        # logger.info("Showing recomendations based on your method!")
         return Response(function(user))
     
