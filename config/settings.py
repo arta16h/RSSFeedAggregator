@@ -186,8 +186,8 @@ LOGGING = {
 }
 
 CELERY_BEAT_SCHEDULE = {
-    '#TaskName' : {
-        'task' : '#TaskAddress',
+    'update' : {
+        'task' : 'podcasts.tasks.update',
         'schedule' : crontab(hour="*/12")
     }
 }
