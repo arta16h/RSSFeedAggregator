@@ -1,9 +1,12 @@
 import jwt, datetime
 from config.publisher_user import Publisher
 
+from rest_framework.mixins import RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework.exceptions import APIException, AuthenticationFailed
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import Response, APIView
+from rest_framework.decorators import action
 from rest_framework import status
 
 from .models import User
@@ -117,3 +120,17 @@ class ChangePasswordAPIView(APIView):
         publisher.publish(f"{user}'s password changed!", queue="signup-login")
         # logger.info(f"{user}'s password changed!")
         return Response({"detail": "password changed successfully"}, status=status.HTTP_202_ACCEPTED)
+    
+
+class UserProfileDetailView(RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+    
+    authentication_classes = (JwtAuthentication,)
+    permission_classes = (IsAuthenticated, BasePermission)
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        filter = User.objects.filter(id=self.request.user.id)
+        queryset = self.filter_queryset(filter)
+        obj = queryset.first()
+        self.check_object_permissions(self.request, obj)
+        return obj
