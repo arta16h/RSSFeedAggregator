@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from users.utils import JwtHelper
 from .models import Podcast, Episode
-from config.publisher_pod import Publisher
+from config.publisher import Publisher
 from .serializers import PodcastSerializer, EpisodeSerializer
 from .utils import like_based_recomended_podcasts, subscription_based_recommended_podcasts
 

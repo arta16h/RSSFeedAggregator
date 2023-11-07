@@ -1,5 +1,5 @@
 import jwt, datetime
-from config.publisher_user import Publisher
+from config.publisher import Publisher
 
 from rest_framework.mixins import RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework.exceptions import APIException, AuthenticationFailed
