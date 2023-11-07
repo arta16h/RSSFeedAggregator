@@ -137,14 +137,17 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+RABBITMQ_HOST = 'rabbitmq'
+RABBITMQ_PORT = '15672'
+
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://redis:6379/0')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://redis:6379/0')
 
-ELASTICSEARCH_HOST = 'localhost'
+ELASTICSEARCH_HOST = 'elasticsearch'
 ELASTICSEARCH_PORT = 9200
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://localhost:9200'
+        'hosts': 'elasticsearch:9200'
     },
 }
 
@@ -160,7 +163,7 @@ LOGGING = {
         },
         'elk_handler' : {
             'level' : 'INFO',
-            'host' : 'http://localhost:9200',
+            'host' : 'elasticsearch:9200',
             'class' : 'config.elk.ElkHandler',
             # 'formatter' : 'main_formatter'
         }
@@ -195,7 +198,7 @@ CELERY_BEAT_SCHEDULE = {
 CACHES = {
     "default":{
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/0",
+        "LOCATION": "redis://redis:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
