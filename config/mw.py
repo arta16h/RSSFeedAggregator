@@ -59,5 +59,5 @@ class LogMiddleWare :
         getdata = GetRequestData(request)
         self.log_info.update(getdata.get_request_data())
         self.log_info["exception"] = str(exception)
-        api_logger.error(msg=getdata.get_request_data(request)+ str(exception))
+        api_logger.error(msg=json.dumps(self.log_info))
         return None
