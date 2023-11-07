@@ -11,11 +11,6 @@ class Parser:
         self.xml_data = self.response.text.replace("itunes:", "itunes_")
         self.base = ET.fromstring(self.xml_data)
 
-    # def read_rss_file(self):
-    #     with open(self.rss_path, "rt", encoding="utf-8") as f:
-    #         file = f.read()
-    #     return file
-
     def rss_parser(self):
         base = self.base
         episodes = []
