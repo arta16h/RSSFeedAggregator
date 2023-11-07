@@ -1,6 +1,8 @@
 from celery import shared_task, Task
 from celery.worker.request import Request
 from celery.exceptions import Retry
+
+from .models import Episode, Podcast
 from .parser import Parser
 
 MAX_CONCURRENCY = 3
@@ -49,13 +51,13 @@ def reading_file(self, data):
 
 
 @shared_task(bind=True, base=BaseTask)
-def parsing_rss(self, data):
+def parsing_rss(self, url):
     # message = f"trying to parse rss link"
     # logger.info(message)
-    parser = Parser()
+    parser = Parser(url=url)
 
     try: 
-        parser.rss_parser(data=data)
+        parser.rss_parser()
         # message = f"parsing rss link succeeded!"
         # logger.info(message)
 
@@ -66,13 +68,20 @@ def parsing_rss(self, data):
     
 
 @shared_task(bind=True, base=BaseTask)
-def update(self, data):
+def update(self, url):
     # message = f"trying to save podcast/episode to db"
     # logger.info(message)
 
     try: 
-        parser = Parser()
-        parser.save_podcast_to_db(data=data)
+        podcast = Podcast.objects.get(url=url)
+        a = podcast.episode_set.all().count()
+        parser = Parser(url=url)
+        parser.save_podcast_to_db(parser.rss_parser())
+        b = podcast.episode_set.all().count()
+
+        if b>a :
+            pass
+
         # message = f"saving podcast/episode to db succeeded!"
         # logger.info(message)
 

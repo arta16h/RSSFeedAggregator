@@ -6,6 +6,7 @@ from .models import Podcast, Episode
 
 class Parser:
     def __init__(self, url=None) :
+        self.url = url
         self.response = requests.get(url)
         self.response.raise_for_status()
         self.xml_data = self.response.text.replace("itunes:", "itunes_")
@@ -69,12 +70,12 @@ class Parser:
         with transaction.atomic():
             podcast = Podcast.objects.get_or_create(title=poddata["title"])[0]
 
+            podcast.websiteUrl = self.url
             podcast.description = poddata.get("description")
             podcast.subtitle = poddata.get("subtitle")
             podcast.author = poddata.get("author")
             podcast.imageUrl = poddata.get("imageUrl")
             podcast.rssOwner = poddata.get("rssOwner")
-            podcast.websiteUrl = poddata.get("websiteUrl")
             podcast.isExplicitContent = poddata.get("isExplicitContent")
             podcast.language = poddata.get("language")
             podcast.contentType = poddata.get("contentType")
