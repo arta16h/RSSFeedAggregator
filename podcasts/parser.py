@@ -5,9 +5,7 @@ from django.db import transaction
 from .models import Podcast, Episode
 
 class Parser:
-    def __init__(self, file=None, path=None, url=None) :
-        self.file = file
-        self.path = path
+    def __init__(self, url=None) :
         self.response = requests.get(url)
         self.response.raise_for_status()
         self.xml_data = self.response.text.replace("itunes:", "itunes_")
@@ -92,6 +90,7 @@ class Parser:
             podcast.save()
 
             episode_titles = Episode.objects.filter(podcast=podcast).values_list("title")
+            episode_titles = list(map(lambda item:item[0], episode_titles))
 
             episode_list = []
             for episode_data in episodes:
