@@ -151,42 +151,42 @@ ELASTICSEARCH_DSL = {
     },
 }
 
-LOGGING = {
-    'version' : 1,
-    'disable_existing_loggers' : False,
-    'handlers' : {
-        'user_activity' : {
-            'level' : 'DEBUG',
-            'class' : 'logging.FileHandler',
-            'filename' : 'user_activity_file.log',
-            'formatter' : 'main_formatter'
-        },
-        'elk_handler' : {
-            'level' : 'INFO',
-            'host' : 'elasticsearch:9200',
-            'class' : 'config.elk.ElkHandler',
-            # 'formatter' : 'main_formatter'
-        }
-    },
-    'formatters' : {
-        'main_formatter' : {
-            'format' : '{levelname} | {asctime} | {message}',
-            'style' : '{'
-        }
-    },
-    'loggers' : {
-        'user_actions' : {
-            'handlers' : ['user_activity', 'elk_handler'],
-            'level' : 'INFO',
-            'propagate' : False
-        },
-        'api_logger' : {
-            'handlers' : ['elk_handler'],
-            'level' : 'INFO',
-            'propagate' : False
-        }
-    }
-}
+# LOGGING = {
+#     'version' : 1,
+#     'disable_existing_loggers' : False,
+#     'handlers' : {
+#         'user_activity' : {
+#             'level' : 'DEBUG',
+#             'class' : 'logging.FileHandler',
+#             'filename' : 'user_activity_file.log',
+#             'formatter' : 'main_formatter'
+#         },
+#         'elk_handler' : {
+#             'level' : 'INFO',
+#             'host' : 'elasticsearch:9200',
+#             'class' : 'config.elk.ElkHandler',
+#             # 'formatter' : 'main_formatter'
+#         }
+#     },
+#     'formatters' : {
+#         'main_formatter' : {
+#             'format' : '{levelname} | {asctime} | {message}',
+#             'style' : '{'
+#         }
+#     },
+#     'loggers' : {
+#         'user_actions' : {
+#             'handlers' : ['user_activity', 'elk_handler'],
+#             'level' : 'INFO',
+#             'propagate' : False
+#         },
+#         'api_logger' : {
+#             'handlers' : ['elk_handler'],
+#             'level' : 'INFO',
+#             'propagate' : False
+#         }
+#     }
+# }
 
 CELERY_BEAT_SCHEDULE = {
     'update' : {

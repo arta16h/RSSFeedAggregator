@@ -9,55 +9,40 @@ class Parser:
         self.path = path
         self.response = requests.get(url)
         self.response.raise_for_status()
-        self.xml_data = self.response.text
+        self.xml_data = self.response.text.replace("itunes:", "itunes_")
         self.base = ET.fromstring(self.xml_data)
 
-    def read_rss_file(self):
-        with open(self.rss_path, "rt", encoding="utf-8") as f:
-            file = f.read()
-        return file
+    # def read_rss_file(self):
+    #     with open(self.rss_path, "rt", encoding="utf-8") as f:
+    #         file = f.read()
+    #     return file
 
     def rss_parser(self):
         base = self.base
         episodes = []
 
         try:
-            poddata = {
-                "title": "",
-                "description": "",
-                "author": "",
-                "imageUrl": "",
-                "rssOwner": "",
-                "websiteUrl": "",
-                "isExplicitContent": "",
-                "copyright": "",
-                "language": "",
-                "contentType": "",
-                "subtitle": "",
-                "category": [],
-                # "pubDate": "",
-                # "keywords": "",
-            }
+            poddata = {}
 
             for item in base.findall(".//item"):
                 episode = {
                     "title": item.findtext("title"),
-                    "duration": item.findtext("itunes:duration"),
+                    "duration": item.findtext("itunes_duration"),
                     "audioUrl": item.find("enclosure").get("url"),
                     "pubDate": item.findtext("pubDate"),
-                    "explicit": item.findtext("itunes:explicit"),
-                    "imageUrl": item.findtext("itunes:image"),
-                    "summary": item.findtext("itunes:summary"),
+                    "explicit": item.findtext("itunes_explicit"),
+                    "imageUrl": item.findtext("itunes_image"),
+                    "summary": item.findtext("itunes_summary"),
                     "description": item.findtext("description"),
                 }
-                explicit_element = item.find("itunes:explicit")
+                explicit_element = item.find("itunes_explicit")
 
                 if explicit_element is not None:
                     episode["explicit"] = explicit_element.text
                 else:
                     episode["explicit"] = ""
 
-                subtitle_element = item.find("itunes:subtitle")
+                subtitle_element = item.find("itunes_subtitle")
                 if subtitle_element is not None:
                     episode["subtitle"] = subtitle_element.text
                 else:
@@ -66,18 +51,18 @@ class Parser:
 
             poddata["title"] = base.findtext("channel/title")
             poddata["description"] = base.findtext("channel/description")
-            poddata["subtitle"] = base.findtext("channel/itunes:subtitle")
-            poddata["author"] = base.findtext("channel/itunes:author")
+            poddata["subtitle"] = base.findtext("channel/itunes_subtitle")
+            poddata["author"] = base.findtext("channel/itunes_author")
             poddata["imageUrl"] = base.findtext("channel/image/url")
-            poddata["rssOwner"] = base.findtext("channel/itunes:owner/itunes:name")
+            poddata["rssOwner"] = base.findtext("channel/itunes_owner/itunes_name")
             poddata["websiteUrl"] = base.findtext("channel/link")
-            poddata["isExplicitContent"] = base.findtext("channel/itunes:explicit")
+            poddata["isExplicitContent"] = base.findtext("channel/itunes_explicit")
             poddata["copyright"] = base.findtext("channel/copyright")
             poddata["language"] = base.findtext("channel/language")
-            poddata["contentType"] = base.findtext("channel/itunes:type")
+            poddata["contentType"] = base.findtext("channel/itunes_type")
             poddata["category"] = [
                 category.text
-                for category in base.findall("channel/itunes:category/itunes:category")] 
+                for category in base.findall("channel/itunes_category/itunes_category")] 
             return {"poddata": poddata, "episodes": episodes}
 
         except requests.exceptions.RequestException as e:
@@ -102,9 +87,11 @@ class Parser:
             podcast.contentType = poddata["contentType"]
             podcast.save()
 
+            episode_titles = Episode.objects.filter(podcast=podcast).values_list("title")
+
             episode_list = []
             for episode_data in episodes:
-                if not Episode.objects.filter(podcast=podcast, audioUrl=episode_data["audioUrl"]).exists():
+                if not episode_data["title"] in episode_titles: 
                     episode = Episode(
                         podcast=podcast,
                         title=episode_data["title"],
