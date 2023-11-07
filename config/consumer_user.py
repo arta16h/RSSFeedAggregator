@@ -17,11 +17,11 @@ class UserActivityConsumer :
 
     def log_user_activity(self, channel, method, property, body) :
         body = body.decode("utf-8")
-        if body.startswith('success') :    
-            self.logger.info(body.lstrip("success"))
+        if body.startswith('Success : ') :    
+            self.logger.info(body.lstrip("Success : "))
             print(body)
-        elif body.startswith('error!!') :
-            self.logger.error(body.lstrip("error!!"))
+        elif body.startswith('Error : ') :
+            self.logger.error(body.lstrip("Error : "))
             print(body)
         else :
             print("Error!")
