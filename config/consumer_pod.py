@@ -1,10 +1,11 @@
 import pika
 import logging
+from django.conf import settings
 
 class PodcastActivityConsumer :
     def __init__(self) -> None:
         self.logger = logging.getLogger('api_logger')
-        self.connection_parameter = pika.ConnectionParameters('localhost')
+        self.connection_parameter = pika.ConnectionParameters(settings.RABBITMQ_HOST)
         self.connection = pika.BlockingConnection(self.connection_parameter)
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue='podcast-update')
