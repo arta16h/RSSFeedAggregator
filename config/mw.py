@@ -59,16 +59,3 @@ class LogMiddleWare :
         getdata = GetRequestData(request)
         api_logger.error(msg=getdata.get_request_data(request)+ str(exception))
         return None
-
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        """
-        called before django calls the view
-        """
-        self.log_info["view_name"] = view_func.__name__
-        return None
-
-    # def process_template_response(self, request, response):
-    #     """
-    #     called just after the view has finished executing
-    #     """
-        
