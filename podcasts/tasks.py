@@ -4,6 +4,7 @@ from celery.exceptions import Retry
 
 from .models import Episode, Podcast
 from .parser import Parser
+from interactions.tasks import notify_users
 
 MAX_CONCURRENCY = 3
 MAX_RETRY = 3
@@ -79,8 +80,8 @@ def update(self, url):
         parser.save_podcast_to_db(parser.rss_parser())
         b = podcast.episode_set.all().count()
 
-        if b>a :
-            pass
+        if b > a :
+            notify_users.delay(podcast.id)
 
         # message = f"saving podcast/episode to db succeeded!"
         # logger.info(message)
