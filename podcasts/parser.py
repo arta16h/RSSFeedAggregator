@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 import xml.etree.ElementTree as ET
 from django.db import transaction
 from .models import Podcast, Episode
@@ -73,10 +74,9 @@ class Parser:
         poddata = data.get("poddata")
         episodes = data.get("episodes")
         with transaction.atomic():
-            podcast = Podcast.objects.get_or_create(title=poddata["title"])
+            podcast = Podcast.objects.get_or_create(title=poddata["title"])[0]
 
             podcast.description = poddata["description"]
-            podcast.category = poddata["category"]
             podcast.subtitle = poddata["subtitle"]
             podcast.author = poddata["author"]
             podcast.imageUrl = poddata["imageUrl"]
@@ -85,6 +85,10 @@ class Parser:
             podcast.isExplicitContent = poddata["isExplicitContent"]
             podcast.language = poddata["language"]
             podcast.contentType = poddata["contentType"]
+            podcast.save()
+
+            for category in poddata["category"] :
+                podcast.category.add(category)
             podcast.save()
 
             episode_titles = Episode.objects.filter(podcast=podcast).values_list("title")
@@ -97,7 +101,7 @@ class Parser:
                         title=episode_data["title"],
                         duration=episode_data["duration"],
                         audioUrl=episode_data["audioUrl"],
-                        pubDate=episode_data["pubDate"],
+                        pubDate= datetime.strptime(episode_data["pubDate"], "%a, %d %b %Y %H:%M:%S %z"),
                         explicit=episode_data["explicit"],
                         imageUrl=episode_data.get("imageUrl", ""),
                         summary=episode_data["summary"],
