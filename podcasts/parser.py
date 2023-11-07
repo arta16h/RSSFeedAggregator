@@ -76,18 +76,18 @@ class Parser:
         with transaction.atomic():
             podcast = Podcast.objects.get_or_create(title=poddata["title"])[0]
 
-            podcast.description = poddata["description"]
-            podcast.subtitle = poddata["subtitle"]
-            podcast.author = poddata["author"]
-            podcast.imageUrl = poddata["imageUrl"]
-            podcast.rssOwner = poddata["rssOwner"]
-            podcast.websiteUrl = poddata["websiteUrl"]
-            podcast.isExplicitContent = poddata["isExplicitContent"]
-            podcast.language = poddata["language"]
-            podcast.contentType = poddata["contentType"]
+            podcast.description = poddata.get("description")
+            podcast.subtitle = poddata.get("subtitle")
+            podcast.author = poddata.get("author")
+            podcast.imageUrl = poddata.get("imageUrl")
+            podcast.rssOwner = poddata.get("rssOwner")
+            podcast.websiteUrl = poddata.get("websiteUrl")
+            podcast.isExplicitContent = poddata.get("isExplicitContent")
+            podcast.language = poddata.get("language")
+            podcast.contentType = poddata.get("contentType")
             podcast.save()
 
-            for category in poddata["category"] :
+            for category in poddata.get("category") :
                 podcast.category.add(category)
             podcast.save()
 
@@ -98,14 +98,14 @@ class Parser:
                 if not episode_data["title"] in episode_titles: 
                     episode = Episode(
                         podcast=podcast,
-                        title=episode_data["title"],
-                        duration=episode_data["duration"],
-                        audioUrl=episode_data["audioUrl"],
-                        pubDate= datetime.strptime(episode_data["pubDate"], "%a, %d %b %Y %H:%M:%S %z"),
-                        explicit=episode_data["explicit"],
+                        title=episode_data.get("title"),
+                        duration=episode_data.get("duration"),
+                        audioUrl=episode_data.get("audioUrl"),
+                        pubDate= datetime.strptime(episode_data.get("pubDate"), "%a, %d %b %Y %H:%M:%S %z"),
+                        explicit=episode_data.get("explicit"),
                         imageUrl=episode_data.get("imageUrl", ""),
-                        summary=episode_data["summary"],
-                        description=episode_data["description"])
+                        summary=episode_data.get("summary"),
+                        description=episode_data.get("description"))
                     episode_list.append(episode)
             Episode.objects.bulk_create(episode_list)
             
