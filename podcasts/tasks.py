@@ -69,7 +69,7 @@ def parsing_rss(self, url):
     
 
 @shared_task(bind=True, base=BaseTask)
-def update(self, url):
+def update_single_podcast(self, url):
     # message = f"trying to save podcast/episode to db"
     # logger.info(message)
 
@@ -90,3 +90,11 @@ def update(self, url):
         # message = f"saving podcast/episode to db failed!" 
         # logger.error(message)
         raise e
+    
+
+@shared_task(bind=True, base=BaseTask)
+def update_all_podcasts(self) :
+    podcast_urls = Podcast.objects.all().values_list("websiteUrl")
+    for url in podcast_urls :
+        update_single_podcast.delay(url[0])
+    

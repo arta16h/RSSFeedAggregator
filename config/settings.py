@@ -193,8 +193,8 @@ ELASTICSEARCH_DSL = {
 
 CELERY_BEAT_SCHEDULE = {
     'update' : {
-        'task' : 'podcasts.tasks.update',
-        'schedule' : crontab(hour="*/12")
+        'task' : 'podcasts.tasks.update_all_podcasts',
+        'schedule' : crontab(minute="*")
     }
 }
 

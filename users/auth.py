@@ -30,12 +30,12 @@ class JwtAuthentication(BaseAuthentication):
         if not auth_header:
             raise AuthenticationFailed
         
+        print(auth_header)
         prefix,token=auth_header.split()
-        print(token)
         if not prefix=='Bearer':
             raise AuthenticationFailed
         user_id=JwtHelper.validate_jwt_token(token,SECRET_KEY)
         if not user_id:
-            raise AuthenticationFailed
+            raise AuthenticationFailed("User not Found!")
         user=User.objects.get(id=user_id)
         return user,token

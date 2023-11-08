@@ -24,6 +24,7 @@ class JwtHelper:
     def validate_jwt_token(token, secret_key):
         try:
             payload = jwt.decode(token, secret_key, algorithms=["HS256"])
+            print(payload)
             return payload.get("user_id")
         except jwt.DecodeError:
             return None

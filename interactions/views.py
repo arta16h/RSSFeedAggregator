@@ -29,13 +29,13 @@ class LikeAPIView(APIView):
         except Like.DoesNotExist:
 
             if like_serializer.validated_data.get("model")=="podcast":
-                podcast = Podcast.objects.get(id = like_serializer.validated_data.get("model_id"))
+                podcast = Podcast.objects.get(id = like_serializer.validated_data.get("id"))
                 if podcast:
                     like = Like(content_object = podcast, account = request.user)
                     like.save()
 
             elif like_serializer.validated_data.get("model") == "episode":
-                episode = Episode.objects.get(id = like_serializer.validated_data.get("model_id"))
+                episode = Episode.objects.get(id = like_serializer.validated_data.get("id"))
                 if episode:
                     like = Like(content_object = episode, account = request.user)
                     like.save()
@@ -56,7 +56,7 @@ class CommentAPIView(APIView):
 
         if comment_serializer.validated_data.get("model")=="podcast":
             try:
-                podcast = Podcast.objects.get(id= comment_serializer.validated_data.get("model_id"))
+                podcast = Podcast.objects.get(id= comment_serializer.validated_data.get("id"))
             except Podcast.DoesNotExist:
                 return Response({"error": "Podcast not found."}, status=status.HTTP_404_NOT_FOUND)
             
@@ -66,7 +66,7 @@ class CommentAPIView(APIView):
 
         elif comment_serializer.validated_data.get("model")=="episode":
             try:
-                episode = Episode.objects.get(id= comment_serializer.validated_data.get("model_id"))
+                episode = Episode.objects.get(id= comment_serializer.validated_data.get("id"))
             except Episode.DoesNotExist:
                 return Response({"error": "Episode not found."}, status=status.HTTP_404_NOT_FOUND)
             
@@ -96,9 +96,8 @@ class SubscribeView(generics.ListCreateAPIView):
     authentication_classes = (JwtAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def create(self, request, *args, **kwargs):
-        subscribe_serializer = SubscribeSerializer(data = request.data)
-        podcast = Podcast.objects.get(id= subscribe_serializer.validated_data.get("model_id"))
+    def post(self, request, *args, **kwargs):
+        podcast = Podcast.objects.get(id= request.data.get("podcast_id"))
         user = request.user
 
         try:
@@ -107,12 +106,13 @@ class SubscribeView(generics.ListCreateAPIView):
             return Response({"message": "unsubscribed"}, status=status.HTTP_200_OK)
         
         except Subscribe.DoesNotExist:
-            subscribe_data = {"user": user.id, "podcast": podcast}
-            serializer = self.get_serializer(data=subscribe_data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            subscribe_data = {"user": user.id, "podcast": podcast.id}
+            subscribe_serializer = SubscribeSerializer(data = subscribe_data)
+            # serializer = self.get_serializer(data=subscribe_data)
+            if subscribe_serializer.is_valid():
+                subscribe_serializer.save()
+                return Response(subscribe_serializer.data, status=status.HTTP_201_CREATED)
+            return Response(subscribe_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def subscribed_list(self, request, *args, **kwargs):
         subscried = Subscribe.objects.filter(user=request.user).values_list("podcast__id", flat=True)

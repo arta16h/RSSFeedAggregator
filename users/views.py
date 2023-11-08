@@ -11,6 +11,7 @@ from rest_framework import status
 
 from .models import User
 from.auth import JwtAuthentication
+from config.settings import SECRET_KEY
 from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer, ChangePasswordSerializer
 
 # Create your views here.
@@ -72,11 +73,11 @@ class LoginAPIView(APIView):
             raise AuthenticationFailed("Password is not correct!")
 
         payload = {
-            "id": user.id,
+            "user_id": user.id,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
             "iat": datetime.datetime.utcnow()}
         
-        token = jwt.encode(payload, "secret", algorithm="HS256")
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
         response = Response()
         response.set_cookie(key="jwt", value=token, httponly=True)
         response.data = {"jwt":token}

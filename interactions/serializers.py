@@ -3,7 +3,7 @@ from .models import Like, Comment, Subscribe, Playlist, Bookmark
 
 
 class SubscribeSerializer(ModelSerializer):
-    class META:
+    class Meta:
         model = Subscribe
         fields = [
             "user",
@@ -13,7 +13,7 @@ class SubscribeSerializer(ModelSerializer):
         ]
 
 class LikeSerializer(ModelSerializer):
-    class META:
+    class Meta:
         model = Like
         fields = [
             "user",
@@ -24,7 +24,7 @@ class LikeSerializer(ModelSerializer):
 
 
 class CommentSerializer(ModelSerializer):
-    class META:
+    class Meta:
         model = Comment
         fields = [
             "user",
@@ -36,7 +36,7 @@ class CommentSerializer(ModelSerializer):
 
 
 class PlaylistSerializer(ModelSerializer):
-    class META:
+    class Meta:
         model = Playlist
         fields = [
             "title",
@@ -58,7 +58,7 @@ class PlaylistSerializer(ModelSerializer):
     
 
 class BookmarkSerializer(ModelSerializer):
-    class META:
+    class Meta:
         model = Bookmark
         fields = [
             "user",
