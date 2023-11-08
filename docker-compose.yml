@@ -1,0 +1,112 @@
+services:
+
+  django:
+    build: .
+    container_name: django
+    image: django
+    networks:
+      - main
+    ports:
+      - 8000:8000
+    restart: always
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - .:/dockerrss
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+    ports:
+      - 6379:6379
+    networks:
+      - main
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-alpine
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_log:/var/log/rabbitmq
+    networks:
+      - main
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+    restart: always
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.0
+    environment:
+      - POSTGRES_DB=podcast
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - main
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  elasticsearch:
+    image: elasticsearch:7.17.3
+    container_name: elasticsearch
+    mem_limit: 512m
+    volumes:
+        - elasticsearch_data:/usr/share/elasticsearch/data
+    environment:
+        discovery.type: single-node
+        ES_JAVA_OPTS: -Xms512m -Xmx512m
+        xpack.security.enabled: 'false'
+    ports:
+    - 9200:9200
+    networks:
+    - main
+    restart: always
+
+  kibana:
+      image: kibana:7.17.3
+      container_name: kibana
+      ports:
+      - 5601:5601
+      depends_on:
+      - elasticsearch
+      networks:
+      - main
+      restart: always
+      volumes:
+      - kibana_data:/usr/share/kibana/data
+
+
+
+  celery:
+      build: .
+      command: celery -A config worker -l INFO -B
+      volumes:
+          - .:/dockerrss
+      depends_on:
+          - django
+          - redis
+      networks:
+          - main
+
+
+networks:
+  main:
+
+volumes:
+  postgres_data:
+  kibana_data:
+  elasticsearch_data:
+  rabbitmq_data:
+  rabbitmq_log:

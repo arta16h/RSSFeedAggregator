@@ -160,5 +160,4 @@ cython_debug/
 #.idea/
 Pipfile
 Pipfile.lock
-docker-compose.yml
 rss.art19.com_apology-line.txt
