@@ -50,9 +50,9 @@ class BaseTask(Task):
 #         raise e
 
 @shared_task(bind=True, base=BaseTask)
-def parsing_rss(self, url):
+def parsing_rss(self, websiteUrl):
     publisher.publish("Trying to parse RSS url...", queue='podcast-update')
-    parser = Parser(url=url)
+    parser = Parser(websiteUrl=websiteUrl)
 
     try: 
         parser.rss_parser()
@@ -64,13 +64,13 @@ def parsing_rss(self, url):
     
 
 @shared_task(bind=True, base=BaseTask)
-def update_single_podcast(self, url):
+def update_single_podcast(self, websiteUrl):
     publisher.publish("Trying to Save Podcast/Episode to DB...", queue='podcast-update')
 
     try: 
-        podcast = Podcast.objects.get(url=url)
+        podcast = Podcast.objects.get(websiteUrl=websiteUrl)
         a = podcast.episode_set.all().count()
-        parser = Parser(url=url)
+        parser = Parser(websiteUrl=websiteUrl)
         parser.save_podcast_to_db(parser.rss_parser())
         b = podcast.episode_set.all().count()
 
@@ -98,11 +98,11 @@ def update_all_podcasts(self) :
         raise e
     
 @shared_task(bind=True, base=BaseTask)
-def save_single_podcast(self, url):
+def save_single_podcast(self, websiteUrl):
     publisher.publish("Trying to Save Podcast/Episode to DB...", queue='podcast-update')
 
     try: 
-        parser = Parser(url=url)
+        parser = Parser(websiteUrl=websiteUrl)
         parser.save_podcast_to_db(parser.rss_parser())
         publisher.publish("Saving to Db Succeeded", queue='podcast-update')
 
