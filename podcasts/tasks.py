@@ -97,3 +97,15 @@ def update_all_podcasts(self) :
         publisher.error_publish("Saving all Podcasts to DB Failed!")
         raise e
     
+@shared_task(bind=True, base=BaseTask)
+def save_single_podcast(self, url):
+    publisher.publish("Trying to Save Podcast/Episode to DB...")
+
+    try: 
+        parser = Parser(url=url)
+        parser.save_podcast_to_db(parser.rss_parser())
+        publisher.publish("Saving to Db Succeeded")
+
+    except Exception as e :
+        publisher.error_publish("Saving to DB Failed!")
+        raise e

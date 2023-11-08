@@ -4,9 +4,11 @@ from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.utils.translation import gettext_lazy as _
 
-from users.utils import JwtHelper
+from users.auth import JwtAuthentication
 from .models import Podcast, Episode
+from .tasks import save_single_podcast
 from config.publisher import Publisher
 from .serializers import PodcastSerializer, EpisodeSerializer
 from .utils import like_based_recomended_podcasts, subscription_based_recommended_podcasts
@@ -64,7 +66,7 @@ class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
     
 
 class PodcastRecommendationAPIView(APIView):
-    authentication_classes = (JwtHelper,)
+    authentication_classes = (JwtAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     recommendations_methods = {
@@ -81,3 +83,14 @@ class PodcastRecommendationAPIView(APIView):
         publisher.publish("Showing Recommendations Based on Your Method...", queue="podcast-update")
         return Response(function(user))
     
+
+class AddPodcastView(APIView):
+    authentication_classes = [JwtAuthentication,]
+    permission_classes=[IsAuthenticated,]
+
+    def post(self, request):
+        data = request.data['url']
+        if not data:
+            raise Response({'message':str(_('URL is invalid!'))}, status=status.HTTP_400_BAD_REQUEST)
+        save_single_podcast.delay(data)
+        return Response({"message":str(_("Rss file save in database successfully."))}, status.HTTP_201_CREATED)

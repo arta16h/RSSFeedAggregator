@@ -1,4 +1,4 @@
-FROM python3
+FROM python:3.11
 
 LABEL version="1.0.0"
 
@@ -18,4 +18,6 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--port", "8000", "--host", "0.0.0.0"]
+CMD python manage.py makemigrations --noinput && \
+    python manage.py migrate --noinput && \
+    python manage.py runserver 0.0.0.0:8000
