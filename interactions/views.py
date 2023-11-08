@@ -15,7 +15,7 @@ class LikeAPIView(APIView):
     authentication_classes = [JwtAuthentication]
     permission_classes=[IsAuthenticated]
 
-    def create(self, request):
+    def post(self, request):
         like_serializer = LikeSerializer(data = request.data)
         like_serializer.is_valid(raise_exception=True)
         user = request.user
@@ -123,7 +123,7 @@ class BookmarkAPIView(APIView):
     authentication_classes = [JwtAuthentication]
     permission_classes=[IsAuthenticated]
 
-    def create(self, request):
+    def post(self, request):
         bookmark_serializer = BookmarkSerializer(data = request.data)
         bookmark_serializer.is_valid(raise_exception=True)
         user = request.user
