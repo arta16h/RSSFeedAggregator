@@ -2,20 +2,21 @@ from celery import shared_task, Task
 from celery.worker.request import Request
 from celery.exceptions import Retry
 
-from .models import Episode, Podcast
+from .models import Podcast
 from .parser import Parser
+from config.publisher import Publisher
 from interactions.tasks import notify_users
 
 MAX_CONCURRENCY = 3
 MAX_RETRY = 3
 
+publisher = Publisher()
 
 class PodcastHandler(Request):
     def on_failure(self, info, send_failed=True, return_ok=False):
-        # if type(info.exception) != Retry:
-            # error_name = type(info.exception).__name__
-            # podcast_id = self.kwargs["podcast_id"]
-            # logger.critical(f'Failed to update podcast: id={podcast_id}: "{error_name}')
+        if type(info.exception) != Retry:
+            error = type(info.exception).__name__
+            publisher.error_publish(f"Failed to update podcast due to {error}")
         return super().on_failure(
             info,
             send_failed=send_failed,
@@ -23,14 +24,12 @@ class PodcastHandler(Request):
         )
     
     def on_retry(self, exc_info):
-        # error_name = type(exc_info.exception.exc).__name__
-        # podcast_id = self.kwargs["podcast_id"]
-        # logger.error(f'Failed to update podcast: "id={podcast_id}" "{error_name}"')
+        error = type(exc_info.exception.exc).__name__
+        publisher.error_publish(f"Failed to update podcast due to {error}")
         return super().on_retry(exc_info)
     
     def on_success(self, **kwargs):
-        # logger.info(kwargs)
-        # logger.info("Successfully updated")
+        publisher.publish("Successfully updated")
         return super().on_success(**kwargs)
     
 
@@ -42,36 +41,31 @@ class BaseTask(Task):
     retry_jitter = False
 
 
-@shared_task(bind=True, base=BaseTask)
-def reading_file(self, data):
-    parser = Parser()
-    try :
-        parser.read_rss_file(data=data)
-    except Exception as e:
-        raise e
-
+# @shared_task(bind=True, base=BaseTask)
+# def reading_file(self, data):
+#     parser = Parser()
+#     try :
+#         parser.read_rss_file(data=data)
+#     except Exception as e:
+#         raise e
 
 @shared_task(bind=True, base=BaseTask)
 def parsing_rss(self, url):
-    # message = f"trying to parse rss link"
-    # logger.info(message)
+    publisher.publish("Trying to parse RSS url...")
     parser = Parser(url=url)
 
     try: 
         parser.rss_parser()
-        # message = f"parsing rss link succeeded!"
-        # logger.info(message)
+        publisher.publish("Parsing Succeeded")
 
     except Exception as e :
-        # message = f"parsing rss link failed!" 
-        # logger.error(message)
+        publisher.error_publish("Parsing Failed!")
         raise e
     
 
 @shared_task(bind=True, base=BaseTask)
 def update_single_podcast(self, url):
-    # message = f"trying to save podcast/episode to db"
-    # logger.info(message)
+    publisher.publish("Trying to Save Podcast/Episode to DB...")
 
     try: 
         podcast = Podcast.objects.get(url=url)
@@ -82,19 +76,24 @@ def update_single_podcast(self, url):
 
         if b > a :
             notify_users.delay(podcast.id)
-
-        # message = f"saving podcast/episode to db succeeded!"
-        # logger.info(message)
+        publisher.publish("Saving to Db Succeeded")
 
     except Exception as e :
-        # message = f"saving podcast/episode to db failed!" 
-        # logger.error(message)
+        publisher.error_publish("Saving to DB Failed!")
         raise e
     
 
 @shared_task(bind=True, base=BaseTask)
 def update_all_podcasts(self) :
-    podcast_urls = Podcast.objects.all().values_list("websiteUrl")
-    for url in podcast_urls :
-        update_single_podcast.delay(url[0])
+    publisher.publish("Trying to Update all Podcasts...")
+    
+    try:
+        podcast_urls = Podcast.objects.all().values_list("websiteUrl")
+        for url in podcast_urls :
+            update_single_podcast.delay(url[0])
+        publisher.publish("Saving all Podcasts to DB Succeeded")
+
+    except Exception as e :
+        publisher.error_publish("Saving all Podcasts to DB Failed!")
+        raise e
     
