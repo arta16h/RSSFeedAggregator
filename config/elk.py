@@ -20,7 +20,7 @@ class LogSender:
         self.elk.index(index=index_name.lower(), document=log_data)
         
 
-class ElasticHandler(Handler) :
+class ElkHandler(Handler) :
     def __init__(self, host,*args, **kwargs) :
         self.db_name = kwargs.pop('db_name', None)
         self.daily_index = kwargs.pop('daily_index', False)

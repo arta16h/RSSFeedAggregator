@@ -1,8 +1,9 @@
 import pika
+from django.conf import settings
 
 class Publisher:
     def __init__(self) :
-        self.connection_parameter = pika.ConnectionParameters('localhost')
+        self.connection_parameter = pika.ConnectionParameters(settings.RABBITMQ_HOST)
 
     def publish(self, message, queue) :
         self.connection = pika.BlockingConnection(self.connection_parameter)
