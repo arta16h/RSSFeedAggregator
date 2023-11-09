@@ -11,7 +11,7 @@ from .models import Podcast, Episode
 from .tasks import save_single_podcast
 from config.publisher import Publisher
 from .serializers import PodcastSerializer, EpisodeSerializer
-from .utils import like_based_recomended_podcasts, subscription_based_recommended_podcasts
+from .utils import recommended_podcasts
 
 # Create your views here.
 
@@ -69,18 +69,10 @@ class PodcastRecommendationAPIView(APIView):
     authentication_classes = (JwtAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    recommendations_methods = {
-        "likes": like_based_recomended_podcasts,
-        "subscriptions": subscription_based_recommended_podcasts,
-    }
-
-    def get(self, request, method):
-        if method not in self.recommendations_methods:
-            publisher.error_publish("Method Not Found!", queue="podcast-update")
-            return Response({"details":"Recommendation method not found"}, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request):
         user = request.user
-        function = self.recommendations_methods[method]
-        publisher.publish("Showing Recommendations Based on Your Method...", queue="podcast-update")
+        function = self.recommended_podcasts
+        publisher.publish("Showing Recommendations ...", queue="podcast-update")
         return Response(function(user))
     
 

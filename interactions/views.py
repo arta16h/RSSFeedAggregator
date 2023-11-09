@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from users.auth import JwtAuthentication
 from podcasts.models import Episode, Podcast
-from .models import Bookmark, Viewed, Episode
+from .models import Bookmark, Viewed, Episode, Subscribe
 from .serializers import *
 from podcasts.serializers import EpisodeSerializer
 
@@ -95,6 +95,7 @@ class PlaylistAPIView(APIView):
 class SubscribeView(generics.ListCreateAPIView):
     authentication_classes = (JwtAuthentication,)
     permission_classes = (IsAuthenticated,)
+    queryset = Subscribe.objects.all()
 
     def post(self, request, *args, **kwargs):
         podcast = Podcast.objects.get(id= request.data.get("podcast_id"))
