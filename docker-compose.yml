@@ -57,6 +57,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  counsumers:
+    container_name: consumers
+    build: .
+    command: python3 manage.py runconsumer
+    volumes:
+        - .:/dockerrss
+    networks:
+        - main
+    depends_on:
+        - rabbitmq
+        - django
+    restart: always
+
 
   elasticsearch:
     image: elasticsearch:7.17.3

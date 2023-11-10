@@ -166,7 +166,7 @@ LOGGING = {
         },
         'elk_handler' : {
             'level' : 'INFO',
-            'host' : 'https://{ELASTICSEARCH_HOST}:{ELASTICSEARCH_PORT}',
+            'host' : f'http://{ELASTICSEARCH_HOST}:{ELASTICSEARCH_PORT}',
             'class' : 'config.elk.ElkHandler',
             # 'formatter' : 'main_formatter'
         }

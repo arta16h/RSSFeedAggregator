@@ -10,7 +10,6 @@ class PodcastActivityConsumer :
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue='podcast-update')
 
-
     def consume(self):
         self.channel.basic_consume(queue='podcast-update', on_message_callback=self.log_pod_activity, auto_ack=True)
         print('Start Consuming...')

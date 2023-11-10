@@ -70,7 +70,7 @@ def update_single_podcast(self, websiteUrl):
     try: 
         podcast = Podcast.objects.get(websiteUrl=websiteUrl)
         a = podcast.episode_set.all().count()
-        parser = Parser(websiteUrl=websiteUrl)
+        parser = Parser(url=websiteUrl)
         parser.save_podcast_to_db(parser.rss_parser())
         b = podcast.episode_set.all().count()
 

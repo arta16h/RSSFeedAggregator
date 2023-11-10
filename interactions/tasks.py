@@ -18,7 +18,7 @@ def create_comment(self, content, episode_id, user_id):
 
 
 @shared_task(bind=True, base=BaseTask)
-def notify_users(podcast_id) :
+def notify_users(self, podcast_id) :
     subscriber_info = Subscribe.objects.filter(podcast__id = podcast_id).values_list("user__email", "user__username")
     podcast = Podcast.objects.get(id=podcast_id)
 
@@ -28,5 +28,5 @@ def notify_users(podcast_id) :
 
 
 @shared_task(bind=True, base=BaseTask)
-def send_notify_email(email, message) :
-    send_mail(subject="New Episodes :D", message=message, recipient_list=[email])
+def send_notify_email(self, email, message) :
+    send_mail(subject="New Episodes :D", message=message, recipient_list=[email], from_email="sevda.hayati2015@gm1il.com")

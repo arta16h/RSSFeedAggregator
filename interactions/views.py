@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from users.auth import JwtAuthentication
 from podcasts.models import Episode, Podcast
-from .models import Bookmark, Viewed, Episode, Subscribe
+from .models import Bookmark, Viewed, Episode, Subscribe, Playlist
 from .serializers import *
 from podcasts.serializers import EpisodeSerializer
 
@@ -84,13 +84,15 @@ class PlaylistAPIView(APIView):
 
     def post(self, request):
         DATA =  request.data.copy()
-        DATA["account"] = request.user
-        DATA.pop("playlist")
+        user = request.user
         playlist_serializer = PlaylistSerializer(data = DATA, partial = True ,instance=Playlist.objects.get(id=request.data.get("playlist")))
         playlist_serializer.is_valid(raise_exception=True)
         playlist_serializer.save()
         return Response(data={"message":"succeeded"}, status=status.HTTP_201_CREATED)
-    
+
+    def playlist_list(self, request, *args, **kwargs) :
+        playlists = Playlist.objects.filter(user = request.user)
+        return Response({"playlists", list(playlists)}, status=status.HTTP_200_OK)
 
 class SubscribeView(generics.ListCreateAPIView):
     authentication_classes = (JwtAuthentication,)
