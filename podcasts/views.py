@@ -22,7 +22,7 @@ class EpisodeListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Episode.objects.all()
-        publisher.publish("Listing all Episodes...", queue="podcast-update")
+        publisher.publish(_("Listing all Episodes..."), queue="podcast-update")
         return queryset
     
 
@@ -31,7 +31,7 @@ class PodcastListView(APIView):
     def get(self, request) :
         queryset = Podcast.objects.all()
         serializer = PodcastSerializer(queryset, many=True)
-        publisher.publish("Listing all Podcasts...", queue="podcast-update")
+        publisher.publish(_("Listing all Podcasts..."), queue="podcast-update")
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
@@ -43,10 +43,10 @@ class PodcastDetailView(generics.RetrieveUpdateDestroyAPIView):
         queryset = Podcast.objects.filter(pk=pk)
 
         if not queryset.exists():
-            publisher.error_publish("Podcast does Not Exist!", queue="podcast-update")
+            publisher.error_publish(_("Podcast does Not Exist!"), queue="podcast-update")
             raise Http404("Podcast not found")
         
-        publisher.publish("Podcast Detail is Shown.", queue="podcast-update")
+        publisher.publish(_("Podcast Detail is Shown."), queue="podcast-update")
         return queryset.first()
     
 
@@ -58,10 +58,10 @@ class EpisodeDetailView(generics.RetrieveUpdateDestroyAPIView):
         queryset = Episode.objects.filter(pk=pk)
 
         if not queryset.exists():
-            publisher.error_publish("Episode does Not Exist!", queue="podcast-update")
-            raise Http404("Podcast episode not found!")
+            publisher.error_publish(_("Episode does Not Exist!"), queue="podcast-update")
+            raise Http404(_("Podcast episode not found!"))
         
-        publisher.publish("Episode Detail is Shown.", queue="podcast-update")
+        publisher.publish(_("Episode Detail is Shown."), queue="podcast-update")
         return queryset.first()
     
 
@@ -72,7 +72,7 @@ class PodcastRecommendationAPIView(APIView):
     def get(self, request):
         user = request.user
         function = self.recommended_podcasts
-        publisher.publish("Showing Recommendations ...", queue="podcast-update")
+        publisher.publish(_("Showing Recommendations ..."), queue="podcast-update")
         return Response(function(user))
     
 
@@ -83,6 +83,6 @@ class AddPodcastView(APIView):
     def post(self, request):
         data = request.data['url']
         if not data:
-            raise Response({'message':str(_('URL is invalid!'))}, status=status.HTTP_400_BAD_REQUEST)
+            raise Response({'message':_('URL is invalid!')}, status=status.HTTP_400_BAD_REQUEST)
         save_single_podcast.delay(data)
-        return Response({"message":str(_("Rss file save in database successfully."))}, status.HTTP_201_CREATED)
+        return Response({"message":_("Rss file save in database successfully.")}, status.HTTP_201_CREATED)
