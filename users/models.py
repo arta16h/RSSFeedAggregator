@@ -2,6 +2,7 @@ import re
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 from .utils import JwtHelper
@@ -12,7 +13,7 @@ class UserManager(BaseUserManager):
 
     def create_user(self, phone, password, **other_fields):
         if not phone:
-            raise ValueError("The Phone Field Can Not Be Empty!")
+            raise ValueError(_("The Phone Field Can Not Be Empty!"))
 
         user = self.model(phone=phone, **other_fields)
         user.set_password(password)
@@ -24,9 +25,9 @@ class UserManager(BaseUserManager):
         other_fields.setdefault('is_superuser', True)
 
         if other_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
+            raise ValueError(_('Superuser must have is_staff=True.'))
         if other_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+            raise ValueError(_('Superuser must have is_superuser=True.'))
 
         return self.create_user(phone, password, **other_fields)
     
@@ -34,7 +35,7 @@ PHONE_REGEX_PATTERN = r"^(\\+98|0)?9\d{9}$"
 
 def phone_validator(phone:str):
     if not (matched := re.fullmatch(PHONE_REGEX_PATTERN, phone.strip())):
-        raise ValidationError("Invalid phone number!")
+        raise ValidationError(_("Invalid phone number!"))
     return matched
 
 
