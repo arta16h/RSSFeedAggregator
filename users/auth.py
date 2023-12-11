@@ -1,4 +1,5 @@
 from django.contrib.auth.backends import BaseBackend
+from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import BaseAuthentication
 
@@ -36,6 +37,6 @@ class JwtAuthentication(BaseAuthentication):
             raise AuthenticationFailed
         user_id=JwtHelper.validate_jwt_token(token,SECRET_KEY)
         if not user_id:
-            raise AuthenticationFailed("User not Found!")
+            raise AuthenticationFailed(_("User not Found!"))
         user=User.objects.get(id=user_id)
         return user,token
