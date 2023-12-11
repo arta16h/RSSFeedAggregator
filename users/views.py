@@ -1,5 +1,5 @@
 import jwt, datetime
-from config.publisher import Publisher
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework.mixins import RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework.exceptions import APIException, AuthenticationFailed
@@ -12,6 +12,7 @@ from rest_framework import status
 from .models import User
 from.auth import JwtAuthentication
 from config.settings import SECRET_KEY
+from config.publisher import Publisher
 from .serializers import UserSerializer, LoginSerializer, LoginOTPSerializer, ChangePasswordSerializer
 
 # Create your views here.
@@ -33,10 +34,10 @@ class SendOTPAPIView(APIView):
         serializer=LoginSerializer(data=request.data, context={"request":request})
         if serializer.is_valid(raise_exception=True):
             serializer.create_otp(request, serializer.data["phone"])
-            publisher.publish("Serializer is valid! OTP was sent", queue="signup-login")
+            publisher.publish(_("Serializer is valid! OTP was sent"), queue="signup-login")
             # logger.info("Serializer is valid! OTP was sent")
-            return Response (data={"message":"succeeded"})
-        publisher.error_publish("Login serializer is Invalid!", queue="signup-login")
+            return Response (data={"message":_("succeeded")})
+        publisher.error_publish(_("Login serializer is Invalid!"), queue="signup-login")
         # logger.error("Login serializer is Invalid!")
         return Response(status=status.HTTP_400_BAD_REQUEST)
         
@@ -48,10 +49,10 @@ class VerifyOTPAPIView(APIView):
             user=User.objects.get(phone=request.session.get("phone"))
             access_token=user.get_access_token()
             refresh_token=user.get_refresh_token()
-            publisher.publish("OTP Verified!", queue="signup-login")
+            publisher.publish(_("OTP Verified!"), queue="signup-login")
             # logger.info("otp verified!")
-            return Response(data={"message":"succeeded", "AT":access_token, "RT":refresh_token})
-        publisher.error_publish("Login OTP Serializer is Invalid!", queue="signup-login")
+            return Response(data={"message":_("succeeded"), "AT":access_token, "RT":refresh_token})
+        publisher.error_publish(_("Login OTP Serializer is Invalid!"), queue="signup-login")
         # logger.error("Login OTP Serializer is Invalid!")
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -63,14 +64,14 @@ class LoginAPIView(APIView):
         user = User.objects.filter(phone= phone).first()
 
         if not User:
-            publisher.error_publish("User does Not Exist!", queue="signup-login")
+            publisher.error_publish(_("User does Not Exist!"), queue="signup-login")
             # logger.error("User does not exist!")
-            raise APIException("User does not exist!")
+            raise APIException(_("User does not exist!"))
 
         if not user.check_password(password):
             # logger.error("Password is not correct!")
-            publisher.error_publish("Password is Not Correct!", queue="signup-login")
-            raise AuthenticationFailed("Password is not correct!")
+            publisher.error_publish(_("Password is Not Correct!"), queue="signup-login")
+            raise AuthenticationFailed(_("Password is not correct!"))
 
         payload = {
             "user_id": user.id,
@@ -87,11 +88,11 @@ class LoginAPIView(APIView):
     
 
 class LogoutAPIView(APIView):
-    def post(self, _):
+    def post(self, *args):
         response = Response()
         response.delete_cookie(key="jwt")
-        response.data = {"message": "succeded"}
-        publisher.publish("User Got Logout!", queue="signup-login")
+        response.data = {"message": _("succeded")}
+        publisher.publish(_("User Got Logout!"), queue="signup-login")
         # logger.info("User got logout!")
         return response
     
@@ -108,19 +109,19 @@ class ChangePasswordAPIView(APIView):
         data = serializer.validated_data
 
         if not user.check_password(data["old_password"]):
-            publisher.error_publish("Invalid Password!", queue="signup-login")
+            publisher.error_publish(_("Invalid Password!"), queue="signup-login")
             # logger.error("Invalid password!")
-            return Response({"detail": "invalid password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response({"detail": _("invalid password")}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
         if user.check_password(data["new_password"]):
             publisher.error_publish("New PAssword, Same as the Old Password!", queue="signup-login")
-            return Response({"detail": "new password can not be same as old password"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response({"detail": _("new password can not be same as old password")}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
         user.set_password(data["new_password"])
         user.save()
         publisher.publish(f"{user}'s password changed!", queue="signup-login")
         # logger.info(f"{user}'s password changed!")
-        return Response({"detail": "password changed successfully"}, status=status.HTTP_202_ACCEPTED)
+        return Response({"detail": _("password changed successfully")}, status=status.HTTP_202_ACCEPTED)
     
 
 class UserProfileDetailView(RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
