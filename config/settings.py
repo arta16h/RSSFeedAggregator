@@ -13,6 +13,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from celery.schedules import crontab
+from django.utils.translation import gettext_lazy as _
 
 load_dotenv()
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'podcasts',
     'users',
     'django_celery_beat',
+    'rosetta',
 ]
 
 MIDDLEWARE = [
@@ -121,6 +123,16 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+
+LANGUAGES = [
+    ("fa", _("Persian")),
+    ("en", _("English")),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
