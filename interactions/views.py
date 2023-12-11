@@ -2,6 +2,7 @@ from rest_framework import generics,status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.utils.translation import gettext_lazy as _
 
 from users.auth import JwtAuthentication
 from podcasts.models import Episode, Podcast
@@ -24,7 +25,7 @@ class LikeAPIView(APIView):
         try:
             already_liked = Like.objects.get(user=user, episode=episode_id)
             already_liked.delete()
-            return Response({"detail": "Like removed successfully."}, status=status.HTTP_200_OK)
+            return Response({"detail": _("Like removed successfully.")}, status=status.HTTP_200_OK)
         
         except Like.DoesNotExist:
 
@@ -58,7 +59,7 @@ class CommentAPIView(APIView):
             try:
                 podcast = Podcast.objects.get(id= comment_serializer.validated_data.get("id"))
             except Podcast.DoesNotExist:
-                return Response({"error": "Podcast not found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": _("Podcast not found.")}, status=status.HTTP_404_NOT_FOUND)
             
             if podcast:
                 comment = Comment(content_object = podcast, account = request.user, text = comment_serializer.validated_data.get("text"))
@@ -68,13 +69,13 @@ class CommentAPIView(APIView):
             try:
                 episode = Episode.objects.get(id= comment_serializer.validated_data.get("id"))
             except Episode.DoesNotExist:
-                return Response({"error": "Episode not found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": _("Episode not found.")}, status=status.HTTP_404_NOT_FOUND)
             
             if episode:
                 comment = Comment(content_object= episode, account= request.user, text= comment_serializer.validated_data.get("text"))
                 comment.save()
 
-        return Response(data={"message":"succeeded"}, status=status.HTTP_201_CREATED)
+        return Response(data={"message":_("succeeded")}, status=status.HTTP_201_CREATED)
     
 
 
@@ -88,7 +89,7 @@ class PlaylistAPIView(APIView):
         playlist_serializer = PlaylistSerializer(data = DATA, partial = True ,instance=Playlist.objects.get(id=request.data.get("playlist")))
         playlist_serializer.is_valid(raise_exception=True)
         playlist_serializer.save()
-        return Response(data={"message":"succeeded"}, status=status.HTTP_201_CREATED)
+        return Response(data={"message":_("succeeded")}, status=status.HTTP_201_CREATED)
 
     def playlist_list(self, request, *args, **kwargs) :
         playlists = Playlist.objects.filter(user = request.user)
@@ -106,7 +107,7 @@ class SubscribeView(generics.ListCreateAPIView):
         try:
             already_subscribed = Subscribe.objects.get(user=user, podcast=podcast)
             already_subscribed.delete()
-            return Response({"message": "unsubscribed"}, status=status.HTTP_200_OK)
+            return Response({"message": _("unsubscribed")}, status=status.HTTP_200_OK)
         
         except Subscribe.DoesNotExist:
             subscribe_data = {"user": user.id, "podcast": podcast.id}
@@ -135,14 +136,14 @@ class BookmarkAPIView(APIView):
         try:
             already_bookmarked = Bookmark.objects.get(user=user, episode=episode_id)
             already_bookmarked.delete()
-            return Response({"detail": "Bookmark removed successfully."}, status=status.HTTP_200_OK)
+            return Response({"detail": _("Bookmark removed successfully.")}, status=status.HTTP_200_OK)
         
         except Bookmark.DoesNotExist:
             episode = Episode.objects.get(id = bookmark_serializer.validated_data.get("episode_id"))
             if episode:
                 bookmark = Bookmark(content_object = episode, account = request.user)
                 bookmark.save()
-            return Response(data={"message": "succeeded"}, status=status.HTTP_201_CREATED)
+            return Response(data={"message": _("succeeded")}, status=status.HTTP_201_CREATED)
         
     def bookmarked_list(self, request, *args, **kwargs):
         bookmarked = Bookmark.objects.filter(user=request.user).values_list("episode__id", flat=True)
