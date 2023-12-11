@@ -2,7 +2,6 @@ import json
 import logging
 import ipaddress
 
-from django.db import connection
 from django.utils.timezone import now
 
 

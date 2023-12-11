@@ -1,7 +1,6 @@
 from logging import Handler
 from datetime import datetime
 import time
-import json
 
 from elasticsearch import Elasticsearch
 
