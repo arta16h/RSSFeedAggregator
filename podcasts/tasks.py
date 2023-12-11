@@ -7,6 +7,8 @@ from .parser import Parser
 from config.publisher import Publisher
 from interactions.tasks import notify_users
 
+from django.utils.translation import gettext_lazy as _
+
 MAX_CONCURRENCY = 3
 MAX_RETRY = 3
 
@@ -51,21 +53,21 @@ class BaseTask(Task):
 
 @shared_task(bind=True, base=BaseTask)
 def parsing_rss(self, websiteUrl):
-    publisher.publish("Trying to parse RSS url...", queue='podcast-update')
+    publisher.publish(_("Trying to parse RSS url..."), queue='podcast-update')
     parser = Parser(websiteUrl=websiteUrl)
 
     try: 
         parser.rss_parser()
-        publisher.publish("Parsing Succeeded", queue='podcast-update')
+        publisher.publish(_("Parsing Succeeded"), queue='podcast-update')
 
     except Exception as e :
-        publisher.error_publish("Parsing Failed!", queue='podcast-update')
+        publisher.error_publish(_("Parsing Failed!"), queue='podcast-update')
         raise e
     
 
 @shared_task(bind=True, base=BaseTask)
 def update_single_podcast(self, websiteUrl):
-    publisher.publish("Trying to Save Podcast/Episode to DB...", queue='podcast-update')
+    publisher.publish(_("Trying to Save Podcast/Episode to DB..."), queue='podcast-update')
 
     try: 
         podcast = Podcast.objects.get(websiteUrl=websiteUrl)
@@ -76,36 +78,36 @@ def update_single_podcast(self, websiteUrl):
 
         if b > a :
             notify_users.delay(podcast.id)
-        publisher.publish("Saving to Db Succeeded", queue='podcast-update')
+        publisher.publish(_("Saving to Db Succeeded"), queue='podcast-update')
 
     except Exception as e :
-        publisher.error_publish("Saving to DB Failed!", queue='podcast-update')
+        publisher.error_publish(_("Saving to DB Failed!"), queue='podcast-update')
         raise e
     
 
 @shared_task(bind=True, base=BaseTask)
 def update_all_podcasts(self) :
-    publisher.publish("Trying to Update all Podcasts...", queue='podcast-update')
+    publisher.publish(_("Trying to Update all Podcasts..."), queue='podcast-update')
     
     try:
         podcast_urls = Podcast.objects.all().values_list("websiteUrl")
         for url in podcast_urls :
             update_single_podcast.delay(url[0])
-        publisher.publish("Saving all Podcasts to DB Succeeded", queue='podcast-update')
+        publisher.publish(_("Saving all Podcasts to DB Succeeded"), queue='podcast-update')
 
     except Exception as e :
-        publisher.error_publish("Saving all Podcasts to DB Failed!", queue='podcast-update')
+        publisher.error_publish(_("Saving all Podcasts to DB Failed!"), queue='podcast-update')
         raise e
     
 @shared_task(bind=True, base=BaseTask)
 def save_single_podcast(self, websiteUrl):
-    publisher.publish("Trying to Save Podcast/Episode to DB...", queue='podcast-update')
+    publisher.publish(_("Trying to Save Podcast/Episode to DB..."), queue='podcast-update')
 
     try: 
         parser = Parser(websiteUrl=websiteUrl)
         parser.save_podcast_to_db(parser.rss_parser())
-        publisher.publish("Saving to Db Succeeded", queue='podcast-update')
+        publisher.publish(_("Saving to Db Succeeded"), queue='podcast-update')
 
     except Exception as e :
-        publisher.error_publish("Saving to DB Failed!", queue='podcast-update')
+        publisher.error_publish(_("Saving to DB Failed!"), queue='podcast-update')
         raise e
