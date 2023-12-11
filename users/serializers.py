@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from .models import User
@@ -27,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
         if password is not None:
             instance.set_password(password)
         else:
-            raise ("Password field can not be empty!" )
+            raise (_("Password field can not be empty!" ))
         instance.save()
         return instance
     
@@ -69,11 +70,11 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     def validate_digits(self, value):
         if 20<len(value)<6:
-            raise ValidationError("Password must have between 6 to 20 digits")
+            raise ValidationError(_("Password must have between 6 to 20 digits"))
         return value
 
     def validate_confirm(self, data):
         if data['new_password'] != data['confirm_password']:
             print(data["new_password"], data["confirm_password"])
-            raise serializers.ValidationError("Passwords don't match")
+            raise serializers.ValidationError(_("Passwords don't match"))
         return data
